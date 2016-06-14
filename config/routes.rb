@@ -1,5 +1,16 @@
 Rails.application.routes.draw do
-  root 'welcome#index'
+  root 'districts#index'
+
+  get    'login'   => 'sessions#new'
+  post   'login'   => 'sessions#create'
+  delete 'logout'  => 'sessions#destroy'
+
+  resources :stacks
+  resources :users
+  resources :chronicles
+  resources :districts, only: [:index, :show]
+  resources :chronicle_bookmarks, only: [:create, :destroy]
+  resources :stack_bookmarks, only: [:create, :destroy]
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 

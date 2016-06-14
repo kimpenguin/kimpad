@@ -1,0 +1,2 @@
+class ChronicleBookmarksController < ApplicationController
+end

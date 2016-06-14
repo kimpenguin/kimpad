@@ -1,0 +1,6 @@
+<h1>MY Chronicles</h1>
+<%@chronicles.each do |chronicle|%>
+	<h3><%=link_to chronicle.title, chronicle_path(chronicle.id)%></h3>
+	<p><%=chronicle.body%></p>
+	<p><%=chronicle.chronicle_url%></p>
+<%end%>

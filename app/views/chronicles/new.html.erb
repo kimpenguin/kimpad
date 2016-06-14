@@ -1,0 +1,9 @@
+<h1>New Chronicle</h1>
+<p>edit this to a modal and allow user to choose between personal post or url</p>
+<%= form_for @chronicle do |f| %>
+	<%=f.text_field :title, placeholder: "Title"%><br>
+	<%=f.text_area :body, placeholder: "Text"%><br>
+	<%=f.text_area :chronicle_url, placeholder: "URL"%><br>
+	<%= f.hidden_field :user_id, value:current_user.id%>
+	<%=f.submit %>
+<% end %>

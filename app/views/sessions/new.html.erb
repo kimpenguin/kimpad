@@ -1,0 +1,9 @@
+<h1>Log in</h1>
+<%= form_for :session, url: login_path do |f| %>
+	<%= f.email_field :email, placeholder:"email", required: true%><br>
+	<%= f.password_field :password, placeholder:"password", required: true%><br>
+	<p id="error">
+		<%= flash[:error]%>
+	</p>
+	<%= f.submit "Log in"%>
+<% end %>

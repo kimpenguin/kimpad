@@ -1,0 +1,5 @@
+<h1>Welcome <%=@user.fname%> <%=@user.lname%></h1>
+<%=link_to "Create Stack", new_stack_path%>
+<%=link_to "Create Chronicle", new_chronicle_path%>
+<%=link_to "Delete Account", user_path(@user.id), method: :delete%>
+<%=link_to "Update Account", edit_user_path(@user.id)%>

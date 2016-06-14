@@ -1,0 +1,18 @@
+<h1>The District</h1>
+<h3>FEATURED STACKS</h3>
+<%@stacks.each do |stack|%>
+	<%=link_to stack.stack_name, stack_path(stack.id)%>
+	by: <%=stack.user.fname%> <%=stack.user.lname%>
+	<% if logged_in? %>
+		<%=link_to "Bookmark", stack_bookmarks_path(stack_id: stack.id, user_id: current_user.id), method: :post%>
+	<%end%>
+<%end%>
+
+<h3>FEATURED CHRONICLES</h3>
+<%@chronicles.each do |chronicle|%>
+	<%=link_to chronicle.title, chronicle_path(chronicle.id)%>
+	by: <%=chronicle.user.fname%> <%=chronicle.user.lname%>
+	<% if logged_in? %>
+		<%=link_to "Bookmark", chronicle_bookmarks_path, method: :post%>
+	<%end%>
+<%end%>
