@@ -3,7 +3,18 @@
 <%= form_for @chronicle do |f| %>
 	<%=f.text_field :title, placeholder: "Title"%><br>
 	<%=f.text_area :body, placeholder: "Text"%><br>
-	<%=f.text_area :chronicle_url, placeholder: "URL"%><br>
+	<%=f.text_area :reference_url, placeholder: "URL"%><br>
 	<%= f.hidden_field :user_id, value:current_user.id%>
+	<%= f.hidden_field :manual, value:"true"%>
 	<%=f.submit %>
 <% end %>
+
+<h1>OR ENTER URL</h1>
+<%= form_for(@chronicle, remote:true) do |f| %>
+	<%=f.text_field :reference_url, placeholder: "url"%><br>
+	<%=f.hidden_field :user_id, value:current_user.id%>
+	<%=f.hidden_field :manual, value:"false"%>
+	<%=f.submit %>
+<% end %>
+
+<div id="scrape"></div>
