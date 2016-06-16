@@ -24,14 +24,14 @@ module FoodnetworkHelper
 		thebody=body.join(" ")
 
 		images=site.css("//img")
+		img=""
 		images.each do |image|
 			if image.attr("title") == title.text
-				the_image=image.attr('src')
+				img=image.attr('src')
 			end
 		end
 
-
-		hash={user_id: current_user.id, reference_url: url, title:"#{title.text}", body:"#{thebody}", image_url: "#{the_image}"}
+		hash={user_id: current_user.id, reference_url: url, title:"#{title.text}", body:"#{thebody}", image_url: "#{img}"}
 		return hash
 	end
 end
