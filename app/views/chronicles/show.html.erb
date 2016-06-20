@@ -1,3 +1,4 @@
 <h1><%=@chronicle.title%></h1>
-<%=@chronicle.body%>
-<%=@chronicle.chronicle_url%>
+<img src="<%=@chronicle.image%>">
+<%=raw @chronicle.body%>
+<%=link_to @chronicle.reference_url, @chronicle.reference_url, target:"_blank"%><br>

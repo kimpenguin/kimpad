@@ -1,14 +1,19 @@
+<%=flash[:alert]%>
+<%= javascript_include_tag Ckeditor.cdn_url%>
+
 <h1>New Chronicle</h1>
 <p>edit this to a modal and allow user to choose between personal post or url</p>
-<%= form_for @chronicle do |f| %>
+<!-- MANUAL FORM -->
+<%= form_for @chronicle, html: { multipart: true } do |f| %>
 	<%=f.text_field :title, placeholder: "Title"%><br>
-	<%=f.text_area :body, placeholder: "Text"%><br>
-	<%=f.text_area :reference_url, placeholder: "URL"%><br>
-	<%= f.hidden_field :user_id, value:current_user.id%>
-	<%= f.hidden_field :manual, value:"true"%>
+	<%=f.cktext_area :body, :ckeditor => { :toolbar => 'mini'}%>
+	<%=f.file_field :image %><br>
+	<%=f.hidden_field :user_id, value:current_user.id%>
+	<%=f.hidden_field :manual, value:"true"%>
 	<%=f.submit %>
 <% end %>
 
+<!-- URL INFO -->
 <h1>OR ENTER URL</h1>
 <%= form_for(@chronicle, remote:true) do |f| %>
 	<%=f.text_field :reference_url, placeholder: "url"%><br>

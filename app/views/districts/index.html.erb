@@ -10,9 +10,12 @@
 
 <h3>FEATURED CHRONICLES</h3>
 <%@chronicles.each do |chronicle|%>
-	<%=link_to chronicle.title, chronicle_path(chronicle.id)%>
-	by: <%=chronicle.user.fname%> <%=chronicle.user.lname%>
+<div id="district-chronicles">
+	<%=link_to chronicle.title, chronicle_path(chronicle.id)%><br>
+	by: <%=chronicle.user.fname%> <%=chronicle.user.lname%><br>
 	<% if logged_in? %>
 		<%=link_to "Bookmark", chronicle_bookmarks_path, method: :post%>
 	<%end%>
+
+</div>
 <%end%>

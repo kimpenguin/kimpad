@@ -19,5 +19,6 @@ class ApplicationController < ActionController::Base
     !current_user.nil?
   end
 
-  include SessionsHelper, ChroniclesHelper, FoodnetworkHelper
+  # helper files
+  include SessionsHelper, ChroniclesHelper, FoodnetworkHelper, RealsimpleHelper, SeriouseatsHelper, AllrecipesHelper
 end

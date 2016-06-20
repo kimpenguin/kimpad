@@ -1,6 +1,14 @@
 <h1>MY Chronicles</h1>
 <%@chronicles.each do |chronicle|%>
 	<h3><%=link_to chronicle.title, chronicle_path(chronicle.id)%></h3>
-	<p><%=chronicle.body%></p>
-	<p><%=chronicle.chronicle_url%></p>
+	<p><%=raw chronicle.body%></p>
+	<p><%=link_to chronicle.reference_url, chronicle.reference_url, target: "_blank"%></p>
+
+	<!-- Bookmarks -->
+	<div class="chronicle-bookmark-<%=chronicle.id%>">
+		<%= link_to "Bookmark", chronicle_bookmarks_path(chronicle_id: chronicle.id), method: :post, remote: true, class: "add-bookmark" %>
+		<%= link_to "Remove Bookmark", chronicle_bookmark_path(chronicle.id), method: :delete, remote: true, class: "remove-bookmark" %>
+	</div>
+	<!-- end of Bookmarks -->
+
 <%end%>

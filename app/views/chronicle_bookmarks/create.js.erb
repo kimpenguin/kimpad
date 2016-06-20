@@ -1,0 +1,3 @@
+// replace bookmark with red bookmark
+$('.chronicle-bookmark-<%=@chronicle.id%>').html('<%= link_to "Remove Bookmark", chronicle_bookmark_path(@chronicle.id), method: :delete, remote: true, class:"remove-bookmark" %>')
+

@@ -1,9 +1,9 @@
 <%= form_for @chronicle do |f| %>
-	<%=f.text_field :title, placeholder: "Title"%><br>
-	<%=f.text_area :body, placeholder: "Text"%><br>
-	<%=f.text_area :reference_url, placeholder: "URL"%><br>
-	<%=f.text_area :image_url, placeholder: "URL"%><br>
-	<%= f.hidden_field :user_id, value:current_user.id%>
-	<%= f.hidden_field :manual, value:"true"%>
+	<%=f.text_area :reference_url%><br>
+	<%=f.text_field :title%><br>
+	<%=f.cktext_area :body, :ckeditor => { :toolbar => 'mini'}, id:"test"%>
+	<%=f.text_area :remote_image_url, id:"pleasesave" %><br>
+	<%=f.hidden_field :user_id, value:current_user.id%>
+	<%=f.hidden_field :manual, value:"from-remote"%>
 	<%=f.submit %>
 <% end %>
