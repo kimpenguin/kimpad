@@ -1,0 +1,2 @@
+class StackChroniclesController < ApplicationController
+end

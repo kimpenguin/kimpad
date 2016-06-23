@@ -1,6 +1,26 @@
 <h1>New Stack</h1>
 <%= form_for @stack do |f| %>
 	<%=f.text_field :stack_name, placeholder: "Stack Name"%><br>
-	<%= f.hidden_field :user_id, value:current_user.id%>
+	<%=f.hidden_field :user_id, value:current_user.id%>
+  <!-- Contributor checkboxes -->
+  Select Contributors <br>
+  <%@users.each do |u|%>
+	  <%=check_box_tag 'users[]', u.id -%>
+	  <%=u.username -%><br>
+  <%end%>
+  <!-- end Contributor checkboxes -->
+
+  <!-- Categories -->
+	Select Category <br>
+  <%@categories.each do |c|%>
+  	<%=check_box_tag 'categories[]', c.id -%>
+		<%=c.category_name -%><br>
+  <%end%>
+
+  <%=check_box_tag 'add new'%>
+  <%="add new" -%><br>
+	<%=text_field_tag :new_cat, nil,:placeholder=>"test" %><br>
+  <!-- End Categories -->
+
 	<%=f.submit %>
 <% end %>

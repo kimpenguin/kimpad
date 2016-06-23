@@ -1,0 +1,9 @@
+<h1><%=@category.category_name%></h1>
+<h2>Stacks</h2>
+
+<h2>Chronicles</h2>
+<%@chronicles.each do |c|%>
+	<%=link_to c.chronicle.title, chronicle_path(c.chronicle.id)%>
+	<%=raw c.chronicle.body%>
+	<%=link_to image_tag(c.chronicle.user.avatar.mini), user_path(c.chronicle.user.id)%><br>
+<%end%>

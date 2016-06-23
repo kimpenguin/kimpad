@@ -1,0 +1,2 @@
+module StackContributorsHelper
+end

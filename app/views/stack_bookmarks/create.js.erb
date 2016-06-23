@@ -1,0 +1,2 @@
+// replace bookmark with red bookmark
+$('.stack-bookmark-<%=@stack.id%>').html('<%= link_to "Remove Bookmark", stack_bookmark_path(@stack.id), method: :delete, remote: true, class:"remove-bookmark" %>')

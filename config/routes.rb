@@ -12,6 +12,7 @@ Rails.application.routes.draw do
   resources :districts, only: [:index, :show]
   resources :chronicle_bookmarks, only: [:create, :destroy]
   resources :stack_bookmarks, only: [:create, :destroy]
+  resources :categories, only: [:show]
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 

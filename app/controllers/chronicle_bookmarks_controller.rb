@@ -1,7 +1,7 @@
 class ChronicleBookmarksController < ApplicationController
 	def create
-		# puts "creating a bookmark"
-		# puts params.inspect
+		puts "creating a bookmark"
+		puts params.inspect
 
 		@cbookmark = ChronicleBookmark.new(user_id: current_user.id, chronicle_id: params[:chronicle_id])	
 		@chronicle = Chronicle.find(params[:chronicle_id])

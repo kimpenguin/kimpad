@@ -6,8 +6,11 @@
 
 	<!-- Bookmarks -->
 	<div class="chronicle-bookmark-<%=chronicle.id%>">
-		<%= link_to "Bookmark", chronicle_bookmarks_path(chronicle_id: chronicle.id), method: :post, remote: true, class: "add-bookmark" %>
-		<%= link_to "Remove Bookmark", chronicle_bookmark_path(chronicle.id), method: :delete, remote: true, class: "remove-bookmark" %>
+		<%if !chronicle.chronicle_bookmarks.exists?%>
+			<%= link_to "Bookmark", chronicle_bookmarks_path(chronicle_id: chronicle.id), method: :post, remote: true, class: "add-bookmark" %>
+		<%else%>
+			<%= link_to "Remove Bookmark", chronicle_bookmark_path(chronicle.id), method: :delete, remote: true, class: "remove-bookmark" %>
+		<%end%>
 	</div>
 	<!-- end of Bookmarks -->
 

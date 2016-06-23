@@ -1,0 +1,29 @@
+<h1>Edit Chronicle</h1>
+<%= form_for @chronicle, html: { multipart: true } do |f| %>
+	<%=f.text_field :title, placeholder: "Title"%><br>
+	<%=f.cktext_area :body, :ckeditor => { :toolbar => 'mini'}%>
+	<%=f.file_field :image %><br>
+	
+  <!-- Categories -->
+	Select Category <br>
+	<%cats=@chronicle_categories.pluck(:category_id)%>
+  <%@categories.each do |c|%>
+  	<%if cats.include?c.id%>
+	  	<%=check_box_tag 'categories[]', c.id, c.id -%>
+			<%=c.category_name -%><br>
+		<%else%>
+	  	<%=check_box_tag 'categories[]', c.id -%>
+			<%=c.category_name -%><br>
+		<%end%>
+  <%end%>
+
+  <%=check_box_tag 'add new'%>
+  <%="add new" -%><br>
+	<%=text_field_tag :new_cat, nil,:placeholder=>"test" %><br>
+  <!-- End Categories -->
+
+
+	<%=f.hidden_field :user_id, value:current_user.id%>
+	<%=f.hidden_field :manual, value:"true"%>
+	<%=f.submit %>
+<% end %>

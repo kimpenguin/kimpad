@@ -1,0 +1,2 @@
+// change the full favorite star icon to an empty star icon
+$('.stack-bookmark-<%=@stack.id%>').html('<%= link_to "Bookmark", stack_bookmarks_path(stack_id: @stack.id), method: :post, remote: true, class: "add-bookmark" %>')

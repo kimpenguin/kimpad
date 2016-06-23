@@ -1,4 +1,27 @@
 <h1>stacks</h1>
 <%@user_stacks.each do |stack|%>
 	<%=link_to stack.stack_name, stack_path(stack.id)%>
+		<!-- Bookmarks -->
+		<div class="stack-bookmark-<%=stack.id%>">
+			<%if !stack.stack_bookmarks.exists?%>
+				<%= link_to "Bookmark", stack_bookmarks_path(stack_id: stack.id), method: :post, remote: true, class: "add-bookmark" %>
+			<%else%>
+				<%= link_to "Remove Bookmark", stack_bookmark_path(stack.id), method: :delete, remote: true, class: "remove-bookmark" %>
+			<%end%>
+		</div>
+		<!-- end of Bookmarks -->
+<%end%>
+
+<h1>Bookmarked Stacks</h1>
+<%@fave_stacks.each do |fav|%>
+	<%=link_to fav.stack.stack_name, stack_path(fav.stack.id)%>
+	<!-- Bookmarks -->
+		<div class="stack-bookmark-<%=fav.stack.id%>">
+			<%if !fav.stack.stack_bookmarks.exists?%>
+				<%= link_to "Bookmark", stack_bookmarks_path(stack_id: fav.stack.id), method: :post, remote: true, class: "add-bookmark" %>
+			<%else%>
+				<%= link_to "Remove Bookmark", stack_bookmark_path(fav.stack.id), method: :delete, remote: true, class: "remove-bookmark" %>
+			<%end%>
+		</div>
+		<!-- end of Bookmarks -->
 <%end%>

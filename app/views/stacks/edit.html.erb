@@ -1,0 +1,38 @@
+edit.html.erb
+<%= form_for @stack do |f| %>
+	<%=f.text_field :stack_name, placeholder: "Stack Name"%><br>
+	<%=f.hidden_field :user_id, value:current_user.id%>
+	<!-- Contributors checkbox -->
+	Select Contributors<br>
+  <%contributors=@stack_contributors.pluck(:user_id)%>
+  <%@users.each do |u|%>
+	  <%if contributors.include?u.id%>
+	  	<%=check_box_tag 'users[]',u.id, u.username -%>
+			<%=u.username -%><br>
+	  <%else%>
+	  	<%=check_box_tag 'users[]', u.id -%>
+			<%=u.username -%><br>
+	  <%end%>
+  <%end%>
+  <!-- end checkboxes -->
+
+  <!-- Categories -->
+	Select Category <br>
+	<%cats=@stack_categories.pluck(:category_id)%>
+  <%@categories.each do |c|%>
+  	<%if cats.include?c.id%>
+	  	<%=check_box_tag 'categories[]', c.id, c.id -%>
+			<%=c.category_name -%><br>
+		<%else%>
+	  	<%=check_box_tag 'categories[]', c.id -%>
+			<%=c.category_name -%><br>
+		<%end%>
+  <%end%>
+
+  <%=check_box_tag 'add new'%>
+  <%="add new" -%><br>
+	<%=text_field_tag :new_cat, nil,:placeholder=>"test" %><br>
+  <!-- End Categories -->
+
+	<%=f.submit %>
+<% end %>

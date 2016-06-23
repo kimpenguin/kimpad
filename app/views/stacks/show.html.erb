@@ -1,3 +1,27 @@
 <h1><%=@stack.stack_name%></h1>
+<%=button_to "edit", edit_stack_path(@stack.id), method: :get %>
+contributors:
+<%@contributors.each do |c|%>
+	<%=link_to c.user.username, user_path(c.user.id)%>
+<%end%>
+categories:
+<%@categories.each do |c|%>
+	<%=link_to c.category.category_name, category_path(c.category.id)%>
+<%end%>
 
+<h1>Chronicles</h1>
 <!-- list of chronicles in this stack -->
+<%@chronicles.each do |chronicle|%>
+	<h1><%=chronicle.title%></h1> 
+	<%=chronicle.body%><br>
+	<%=chronicle.reference_url%>
+	<!-- Bookmarks -->
+		<div class="chronicle-bookmark-<%=chronicle.id%>">
+			<%if !chronicle.chronicle_bookmarks.exists?%>
+				<%= link_to "Bookmark", chronicle_bookmarks_path(chronicle_id: chronicle.id), method: :post, remote: true, class: "add-bookmark" %>
+			<%else%>
+				<%= link_to "Remove Bookmark", chronicle_bookmark_path(chronicle.id), method: :delete, remote: true, class: "remove-bookmark" %>
+			<%end%>
+		</div>
+		<!-- end of Bookmarks -->
+<%end%>

@@ -8,23 +8,27 @@ class ChroniclesController < ApplicationController
 		@chronicle=Chronicle.new
 		@stacks=Stack.where(user_id:current_user.id)
 		@stack=Stack.new
+		@categories=Category.all
 	end
 
 	def create
+		puts "creating"
+		# puts params.inspect
+		# add_categories
+		# redirect_to :back
 		# create the new chronicle
 		if params[:chronicle][:manual]=="true"
-			# @chronicle=Chronicle.new(chronicle_params)
 			@chronicle=Chronicle.new(chronicle_params)
-			# binding.pry
 
 			puts "HELLLLLLOOOO URL PLEASE PASTE"
 			puts params[:chronicle][:image]
 			# checks to see if the chronicle url exists
 			if !(Chronicle.where(reference_url: params[:chronicle][:reference_url]).first && params[:chronicle][:reference_url]=nil)
 					@chronicle.save!
-					puts @chronicle.image.url # => '/url/to/file.png'
-					puts @chronicle.image.current_path # => 'path/to/file.png'
-					puts @chronicle.image_identifier # => 'file.png'
+					add_chronicle_categories #add the categories
+					# puts @chronicle.image.url # => '/url/to/file.png'
+					# puts @chronicle.image.current_path # => 'path/to/file.png'
+					# puts @chronicle.image_identifier # => 'file.png'
 					redirect_to chronicle_path(@chronicle.id)
 			end
 
@@ -38,6 +42,7 @@ class ChroniclesController < ApplicationController
 			puts "WAAAAT"
 			puts @chronicle.image
 			if @chronicle.save
+				add_chronicle_categories #add the categories
 				redirect_to chronicle_path(@chronicle.id)
 			else
 				flash[:alert] = "Sorry! The post exists."
@@ -51,6 +56,7 @@ class ChroniclesController < ApplicationController
 			# goto new.js.erb
 			respond_to do |format|
 				@chronicle=Chronicle.new(get_parameters(url))
+				@categories=Category.all
 				puts "WELCOM BACK"
 				puts @chronicle.title
 				puts @chronicle.body
@@ -68,9 +74,27 @@ class ChroniclesController < ApplicationController
 		@chronicle=Chronicle.find(params[:id])
 	end
 
+	def edit
+		@chronicle=Chronicle.find(params[:id])
+		@categories=Category.all
+		@chronicle_categories=ChronicleCategory.where(chronicle_id:params[:id])
+	end
+
+	def update
+		@chronicle=Chronicle.find(params[:id])
+		if @chronicle.update_attributes(chronicle_params)
+			update_chronicle_categories
+			flash[:notice] = "The post has been updated."
+			redirect_to chronicle_path(@chronicle.id)
+		else
+			flash[:alert] = "Sorry! There was an error."
+			redirect_to :back
+		end
+	end
+
 	# strong parameters
 	private
 	def chronicle_params
-		params.require(:chronicle).permit(:user_id, :title, :body, :image, :reference_url, :remote_image_url)
+		params.require(:chronicle).permit(:user_id, :title, :body, :image, :reference_url, :unfiled, :remote_image_url)
 	end
 end

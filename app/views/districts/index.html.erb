@@ -4,7 +4,21 @@
 	<%=link_to stack.stack_name, stack_path(stack.id)%>
 	by: <%=stack.user.fname%> <%=stack.user.lname%>
 	<% if logged_in? %>
-		<%=link_to "Bookmark", stack_bookmarks_path(stack_id: stack.id, user_id: current_user.id), method: :post%>
+		<!-- Bookmarks -->
+		<div class="stack-bookmark-<%=stack.id%>">
+			<%if !stack.stack_bookmarks.exists?%>
+				<%= link_to "Bookmark", stack_bookmarks_path(stack_id: stack.id), method: :post, remote: true, class: "add-bookmark" %>
+			<%else%>
+				<%= link_to "Remove Bookmark", stack_bookmark_path(stack.id), method: :delete, remote: true, class: "remove-bookmark" %>
+			<%end%>
+		</div>
+		<!-- end of Bookmarks -->
+		<!-- Contributors to the Stack -->
+		<%sc=StackContributor.where(stack_id:stack.id)%>
+		<%sc.each do |contributor|%>
+			<%=link_to image_tag(contributor.user.avatar.mini.url), user_path(contributor.user.id)%>
+		<%end%>
+		<!-- end of Contributors -->
 	<%end%>
 <%end%>
 
@@ -12,9 +26,17 @@
 <%@chronicles.each do |chronicle|%>
 <div id="district-chronicles">
 	<%=link_to chronicle.title, chronicle_path(chronicle.id)%><br>
-	by: <%=chronicle.user.fname%> <%=chronicle.user.lname%><br>
+	<%=link_to image_tag(chronicle.user.avatar.mini.url), user_path(chronicle.user.id)%>
 	<% if logged_in? %>
-		<%=link_to "Bookmark", chronicle_bookmarks_path, method: :post%>
+		<!-- Bookmarks -->
+		<div class="chronicle-bookmark-<%=chronicle.id%>">
+			<%if !chronicle.chronicle_bookmarks.exists?%>
+				<%= link_to "Bookmark", chronicle_bookmarks_path(chronicle_id: chronicle.id), method: :post, remote: true, class: "add-bookmark" %>
+			<%else%>
+				<%= link_to "Remove Bookmark", chronicle_bookmark_path(chronicle.id), method: :delete, remote: true, class: "remove-bookmark" %>
+			<%end%>
+		</div>
+		<!-- end of Bookmarks -->
 	<%end%>
 
 </div>

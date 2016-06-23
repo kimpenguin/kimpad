@@ -2,7 +2,8 @@ class Chronicle < ActiveRecord::Base
 	belongs_to :user
 	has_and_belongs_to_many :stacks
 	has_many :chronicle_bookmarks
-	validates :reference_url, uniqueness: true
+	has_many :chronicle_categories
+	# validates :reference_url, uniqueness: true, on: :create
 
 	# before save
 	# set the remote_image_url to the url contained in image

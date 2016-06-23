@@ -3,6 +3,11 @@ class User < ActiveRecord::Base
 	has_many :chronicles
 	has_many :bookmarks
 	has_many :lists
+  has_many :stack_contributors
+  has_many :stacks, through: :stack_contributors
+  
+  # allows users to upload image
+  mount_uploader :avatar, PictureUploader
 
 	# downcases email
 	before_save { self.email = email.downcase }
@@ -10,6 +15,9 @@ class User < ActiveRecord::Base
 	# first name and last name validation
   validates :fname,  presence: true, length: { maximum: 50 }, on: :create
   validates :lname,  presence: true, length: { maximum: 50 }, on: :create
+
+  # username validation
+  validates :lname,  presence: true, uniqueness:true, case_sensitive:false, on: :create
 
   # email validation
   VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i

@@ -20,5 +20,5 @@ class ApplicationController < ActionController::Base
   end
 
   # helper files
-  include SessionsHelper, ChroniclesHelper, FoodnetworkHelper, RealsimpleHelper, SeriouseatsHelper, AllrecipesHelper
+  include SessionsHelper, ChroniclesHelper, StacksHelper,FoodnetworkHelper, RealsimpleHelper, SeriouseatsHelper, AllrecipesHelper
 end
