@@ -75,28 +75,40 @@
 	<div id="district">
 		<!-- district background if i want it -->
 		<!-- <div id="district-bg"></div> -->
-		<h1>The District</h1>
-		<h3>FEATURED STACKS</h3>
-		<%@stacks.each do |stack|%>
-			<%=link_to stack.stack_name, stack_path(stack.id)%>
-				by: <%=stack.user.fname%> <%=stack.user.lname%>
-				<!-- Bookmarks -->
-				<div class="stack-bookmark-<%=stack.id%>">
-					<%if !stack.stack_bookmarks.exists?%>
-						<%= link_to "Bookmark", stack_bookmarks_path(stack_id: stack.id), method: :post, remote: true, class: "add-bookmark" %>
-					<%else%>
-						<%= link_to "Remove Bookmark", stack_bookmark_path(stack.id), method: :delete, remote: true, class: "remove-bookmark" %>
-					<%end%>
-				</div>
-				<!-- end of Bookmarks -->
+		<div id="district-bg"></div>
+		<h1 id="center-text">Explore</h1>
+		<h3 id="center-text">FEATURED STACKS</h3>
+		<div class="stack-box">
+			<p class='arrow-left'><</p>
+	    <p class='arrow-right'>></p>
+			<div class="stack-box-width">
+				<%@stacks.each do |stack|%>
+					<div class="stack">
+						<%=link_to stack.stack_name, stack_path(stack.id)%>
 
-				<!-- Contributors to the Stack -->
-				<%sc=StackContributor.where(stack_id:stack.id)%>
-				<%sc.each do |contributor|%>
-					<%=link_to image_tag(contributor.user.avatar.mini.url), user_path(contributor.user.id)%>
+						<!-- Bookmarks -->
+						<div class="stack-bookmark-<%=stack.id%>">
+							<%if !stack.stack_bookmarks.exists?%>
+								<%= link_to "Bookmark", stack_bookmarks_path(stack_id: stack.id), method: :post, remote: true, class: "add-bookmark"%>
+								<%= link_to stack_bookmarks_path(stack_id: stack.id), method: :post, remote: true, class: "add-bookmark" do%>
+									<i class="fa fa-bookmark-o"></i>
+								<%end%>
+							<%else%>
+								<%= link_to "Remove Bookmark", stack_bookmark_path(stack.id), method: :delete, remote: true, class: "remove-bookmark" %>
+							<%end%>
+						</div>
+						<!-- end of Bookmarks -->
+
+						<!-- Contributors to the Stack -->
+						<%sc=StackContributor.where(stack_id:stack.id)%>
+						<%sc.each do |contributor|%>
+							<%=link_to image_tag(contributor.user.avatar.mini.url), user_path(contributor.user.id)%>
+						<%end%>
+						<!-- end of Contributors -->
+					</div>
 				<%end%>
-				<!-- end of Contributors -->
-		<%end%>
+			</div>
+		</div>
 
 		<h3>FEATURED CHRONICLES</h3>
 		<%@chronicles.each do |chronicle|%>

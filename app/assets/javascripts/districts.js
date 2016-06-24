@@ -28,21 +28,31 @@ $(document).ready(function(){
 	$(".arrow-right").fadeIn(3000);
 	})
 
+	// determines page width
+	function pageWidth(){
+		var pix=window.innerWidth;
+		return pix;
+	}
 	// #####################################
 	// arrows for scroll - stack
+
 	$(".arrow-left").click(function(){
-      $(".stack-box").animate({scrollLeft: "-="+100});
+		var boxwidth=pageWidth();
+    $(".stack-box").animate({scrollLeft: "-="+boxwidth});
   });
   $(".arrow-right").click(function(){
-      $(".stack-box").animate({scrollLeft: "+="+100});
+		var boxwidth=pageWidth();
+    $(".stack-box").animate({scrollLeft: "+="+boxwidth});
   });  
 	// #####################################
 	// arrows for scroll - chronicle
 	$(".arrow-left2").click(function(){
-      $(".chronicle-box").animate({scrollLeft: "-="+100});
+		var boxwidth=pageWidth();
+    $(".chronicle-box").animate({scrollLeft: "-="+boxwidth});
   });
   $(".arrow-right2").click(function(){
-      $(".chronicle-box").animate({scrollLeft: "+="+100});
+		var boxwidth=pageWidth();
+    $(".chronicle-box").animate({scrollLeft: "+="+boxwidth});
   });  
 
 });
