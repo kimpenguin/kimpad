@@ -5,15 +5,17 @@
   <link href="http://code.jquery.com/ui/1.10.4/themes/ui-lightness/jquery-ui.css" rel="stylesheet">
   <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
   <script src="http://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
+  <script src="assets/cookies.js"></script>
   <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
   <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
   <%= csrf_meta_tags %>
 </head>
 <body>
+	<!-- navigation bar -->
 	<nav>
 		<ul>
-		  <li><%=link_to "ORME", root_path%></li>
 		  <%if logged_in?%>
+			  <li><%=link_to "ORME", root_path%></li>
 			  <li><%=link_to "Explore", districts_path%></li>
 			  <li><%=link_to "MY Profile", user_path(current_user.id)%></li>
 			  <li><%=link_to "My Stacks", stacks_path%></li>
@@ -22,11 +24,13 @@
 				<li><%=link_to "Add Chronicle", new_chronicle_path%></li>
 			  <li><%=link_to "Log Out", logout_path, method: :delete%></li>
 		  <%else%>
+			  <li><%=link_to "ORME", root_path, id:'logo-nl'%></li>
 			  <li><%=link_to "Log In", login_path%></li>
 			  <li><%=link_to "Sign Up", new_user_path%></li>
 		  <%end%>
 		</ul>
 	</nav>
+	<!-- end of navigation bar -->
 	<%=flash[:notice]%>
 
 <%= yield %>

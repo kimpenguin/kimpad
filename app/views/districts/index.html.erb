@@ -1,43 +1,121 @@
-<h1>The District</h1>
-<h3>FEATURED STACKS</h3>
-<%@stacks.each do |stack|%>
-	<%=link_to stack.stack_name, stack_path(stack.id)%>
-	by: <%=stack.user.fname%> <%=stack.user.lname%>
-	<% if logged_in? %>
-		<!-- Bookmarks -->
-		<div class="stack-bookmark-<%=stack.id%>">
-			<%if !stack.stack_bookmarks.exists?%>
-				<%= link_to "Bookmark", stack_bookmarks_path(stack_id: stack.id), method: :post, remote: true, class: "add-bookmark" %>
-			<%else%>
-				<%= link_to "Remove Bookmark", stack_bookmark_path(stack.id), method: :delete, remote: true, class: "remove-bookmark" %>
-			<%end%>
+<!-- ####################################################################### -->
+<!-- landing page -->
+<!-- if the user isn't logged in -->
+<% if !logged_in? %>
+	<div id="landing">
+		<div class="landing-box">
+			<h1>OrMé</h1>
+			<div class="landing-login">
+				<%=button_tag "Log In", id:"landing-log-button"%>
+				<div class="landing-form">
+					<%= form_for :session, url: login_path do |f| %>
+						<%= f.email_field :email, placeholder:"email", required: true%><br>
+						<%= f.password_field :password, placeholder:"password", required: true%><br>
+						<span id="error">
+							<%= flash[:error]%>
+						</span>
+						<%= f.submit "Log in"%>
+					<% end %>
+				</div>
+					<%=button_tag "Explore >>", id:"landing-log-button2"%>
+			</div>
 		</div>
-		<!-- end of Bookmarks -->
-		<!-- Contributors to the Stack -->
-		<%sc=StackContributor.where(stack_id:stack.id)%>
-		<%sc.each do |contributor|%>
-			<%=link_to image_tag(contributor.user.avatar.mini.url), user_path(contributor.user.id)%>
+	</div>
+
+	<!-- show the district -->
+	<div id="district-not-loggedin">
+		<!-- district background if i want it -->
+		<div id="district-bg"></div>
+		<h1 id="center-text">Explore</h1>
+		<h3 id="center-text">FEATURED STACKS</h3>
+		<div class="stack-box">
+			<p class='arrow-left'><</p>
+	    <p class='arrow-right'>></p>
+			<div class="stack-box-width">
+	
+				<%@stacks.each do |stack|%>
+					<div class="stack">
+						<p><%=link_to stack.stack_name, stack_path(stack.id)%></p>
+						<%arr=stack.stack_chronicles.pluck(:chronicle_id)%>
+						<!-- if there are stackchronicles, get a random image -->
+						<%if stack.stack_chronicles.any?%>
+							<div class="stack-inner1">
+								<div class="stack-inner2"><img src="<%=Chronicle.find(arr[0]).image.url%>"></div>
+								<div class="stack-inner3"><img src="<%=Chronicle.find(arr[1]).image.url%>"></div>
+								<div class="stack-inner3"><img src="<%=Chronicle.find(arr[2]).image.url%>"></div>
+								<div class="stack-inner3"><img src="<%=Chronicle.find(arr[3]).image.url%>"></div>
+							</div>
+						<%end%>
+					</div>
+				<%end%>
+				<div class="stack">
+					<%=link_to "Sign Up", new_user_path%><br>
+				</div>
+			</div>
+		</div>
+
+		<h3 id="center-text">FEATURED CHRONICLES</h3>
+		<div class="chronicle-box">
+			<p class='arrow-left2'><</p>
+	    <p class='arrow-right2'>></p>
+			<div class="chronicle-box-width">
+				<%@chronicles.each do |chronicle|%>
+					<div class="chronicle">
+						<div class="chronicle-inner1"><img src="<%=chronicle.image.url%>"></div>
+						<%=link_to chronicle.title, chronicle_path(chronicle.id)%><br>
+					</div>
+				<%end%>
+			</div>
+		</div>
+	</div>
+<%else%>
+<!-- ####################################################################### -->
+	<!-- user is logged in -->
+	<!-- show the district -->
+	<div id="district">
+		<!-- district background if i want it -->
+		<!-- <div id="district-bg"></div> -->
+		<h1>The District</h1>
+		<h3>FEATURED STACKS</h3>
+		<%@stacks.each do |stack|%>
+			<%=link_to stack.stack_name, stack_path(stack.id)%>
+				by: <%=stack.user.fname%> <%=stack.user.lname%>
+				<!-- Bookmarks -->
+				<div class="stack-bookmark-<%=stack.id%>">
+					<%if !stack.stack_bookmarks.exists?%>
+						<%= link_to "Bookmark", stack_bookmarks_path(stack_id: stack.id), method: :post, remote: true, class: "add-bookmark" %>
+					<%else%>
+						<%= link_to "Remove Bookmark", stack_bookmark_path(stack.id), method: :delete, remote: true, class: "remove-bookmark" %>
+					<%end%>
+				</div>
+				<!-- end of Bookmarks -->
+
+				<!-- Contributors to the Stack -->
+				<%sc=StackContributor.where(stack_id:stack.id)%>
+				<%sc.each do |contributor|%>
+					<%=link_to image_tag(contributor.user.avatar.mini.url), user_path(contributor.user.id)%>
+				<%end%>
+				<!-- end of Contributors -->
 		<%end%>
-		<!-- end of Contributors -->
-	<%end%>
-<%end%>
 
-<h3>FEATURED CHRONICLES</h3>
-<%@chronicles.each do |chronicle|%>
-<div id="district-chronicles">
-	<%=link_to chronicle.title, chronicle_path(chronicle.id)%><br>
-	<%=link_to image_tag(chronicle.user.avatar.mini.url), user_path(chronicle.user.id)%>
-	<% if logged_in? %>
-		<!-- Bookmarks -->
-		<div class="chronicle-bookmark-<%=chronicle.id%>">
-			<%if !chronicle.chronicle_bookmarks.exists?%>
-				<%= link_to "Bookmark", chronicle_bookmarks_path(chronicle_id: chronicle.id), method: :post, remote: true, class: "add-bookmark" %>
-			<%else%>
-				<%= link_to "Remove Bookmark", chronicle_bookmark_path(chronicle.id), method: :delete, remote: true, class: "remove-bookmark" %>
-			<%end%>
+		<h3>FEATURED CHRONICLES</h3>
+		<%@chronicles.each do |chronicle|%>
+		<div id="district-chronicles">
+			<%=link_to chronicle.title, chronicle_path(chronicle.id)%><br>
+				<%=link_to image_tag(chronicle.user.avatar.mini.url), user_path(chronicle.user.id)%>
+				<!-- Bookmarks -->
+				<div class="chronicle-bookmark-<%=chronicle.id%>">
+					<%if !chronicle.chronicle_bookmarks.exists?%>
+						<%= link_to "Bookmark", chronicle_bookmarks_path(chronicle_id: chronicle.id), method: :post, remote: true, class: "add-bookmark" %>
+					<%else%>
+						<%= link_to "Remove Bookmark", chronicle_bookmark_path(chronicle.id), method: :delete, remote: true, class: "remove-bookmark" %>
+					<%end%>
+				</div>
+				<!-- end of Bookmarks -->
+
 		</div>
-		<!-- end of Bookmarks -->
-	<%end%>
-
-</div>
+		<%end%>
+	</div>
 <%end%>
+<!-- ####################################################################### -->
+<!-- end of landing -->
