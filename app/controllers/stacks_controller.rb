@@ -64,6 +64,23 @@ class StacksController < ApplicationController
 		redirect_to stack_path(@stack.id)
 	end
 
+	def destroy
+		puts "in destroy stack"
+		@stack=Stack.find(params[:id])
+		# ensure that all associated records are deleted
+		@stack_bookmarks=StackBookmark.where(stack_id:params[:id])
+		@stack_categories=StackCategory.where(stack_id:params[:id])
+		@stack_chronicles=StackChronicle.where(stack_id:params[:id])
+		@stack_contributors=StackContributor.where(stack_id:params[:id])
+
+		@stack_bookmarks.destroy_all
+		@stack_categories.destroy_all
+		@stack_chronicles.destroy_all
+		@stack_contributors.destroy_all
+		@stack.destroy
+
+		redirect_to user_path(current_user.id)
+	end
 	# strong parameters
 	private
 	def stack_params

@@ -1,4 +1,5 @@
 <h1>Edit Chronicle</h1>
+<%=button_to "delete", chronicle_path(@chronicle.id), method: :delete%>
 <%= form_for @chronicle, html: { multipart: true } do |f| %>
 	<%=f.text_field :title, placeholder: "Title"%><br>
 	<%=f.cktext_area :body, :ckeditor => { :toolbar => 'mini'}%>

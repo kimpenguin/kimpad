@@ -29,22 +29,33 @@
 		<h1 id="center-text">Explore</h1>
 		<h3 id="center-text">FEATURED STACKS</h3>
 		<div class="stack-box">
-			<p class='arrow-left'><</p>
-	    <p class='arrow-right'>></p>
+			<div class='arrow-left'><i class="fa fa-arrow-circle-left fa-2x"></i></div>
+	    <div class='arrow-right'><i class="fa fa-arrow-circle-right fa-2x"></i></div>
+			
 			<div class="stack-box-width">
 	
 				<%@stacks.each do |stack|%>
 					<div class="stack">
-						<p><%=link_to stack.stack_name, stack_path(stack.id)%></p>
+						<div class="stack-name">
+							<p><%=link_to stack.stack_name, stack_path(stack.id)%></p>
+						</div>
 						<%arr=stack.stack_chronicles.pluck(:chronicle_id)%>
 						<!-- if there are stackchronicles, get a random image -->
 						<%if stack.stack_chronicles.any?%>
-							<div class="stack-inner1">
+							<!-- <div class="stack-inner1"> -->
+							<%if Chronicle.exists?(arr[0])%>
 								<div class="stack-inner2"><img src="<%=Chronicle.find(arr[0]).image.url%>"></div>
+							<%end%>
+							<%if Chronicle.exists?(arr[1])%>
 								<div class="stack-inner3"><img src="<%=Chronicle.find(arr[1]).image.url%>"></div>
+							<%end%>
+							<%if Chronicle.exists?(arr[2])%>
 								<div class="stack-inner3"><img src="<%=Chronicle.find(arr[2]).image.url%>"></div>
+							<%end%>
+							<%if Chronicle.exists?(arr[3])%>
 								<div class="stack-inner3"><img src="<%=Chronicle.find(arr[3]).image.url%>"></div>
-							</div>
+							<%end%>
+							<!-- </div> -->
 						<%end%>
 					</div>
 				<%end%>
@@ -56,8 +67,9 @@
 
 		<h3 id="center-text">FEATURED CHRONICLES</h3>
 		<div class="chronicle-box">
-			<p class='arrow-left2'><</p>
-	    <p class='arrow-right2'>></p>
+			<div class='arrow-left2'><i class="fa fa-arrow-circle-left fa-2x"></i></div>
+	    <div class='arrow-right2'><i class="fa fa-arrow-circle-right fa-2x"></i></div>
+
 			<div class="chronicle-box-width">
 				<%@chronicles.each do |chronicle|%>
 					<div class="chronicle">
@@ -79,54 +91,88 @@
 		<h1 id="center-text">Explore</h1>
 		<h3 id="center-text">FEATURED STACKS</h3>
 		<div class="stack-box">
-			<p class='arrow-left'><</p>
-	    <p class='arrow-right'>></p>
+			<div class='arrow-left'><i class="fa fa-arrow-circle-left fa-2x"></i></div>
+	    <div class='arrow-right'><i class="fa fa-arrow-circle-right fa-2x"></i></div>
+
 			<div class="stack-box-width">
 				<%@stacks.each do |stack|%>
 					<div class="stack">
-						<%=link_to stack.stack_name, stack_path(stack.id)%>
+						<div class="stack-name">
+							<p><%=link_to stack.stack_name, stack_path(stack.id)%></p>
+						</div>
 
 						<!-- Bookmarks -->
 						<div class="stack-bookmark-<%=stack.id%>">
 							<%if !stack.stack_bookmarks.exists?%>
-								<%= link_to "Bookmark", stack_bookmarks_path(stack_id: stack.id), method: :post, remote: true, class: "add-bookmark"%>
-								<%= link_to stack_bookmarks_path(stack_id: stack.id), method: :post, remote: true, class: "add-bookmark" do%>
-									<i class="fa fa-bookmark-o"></i>
+								<%= link_to stack_bookmarks_path(stack_id: stack.id), method: :post, remote: true, class: "add-book" do%>
+									<i class="fa fa-calendar-check-o fa-lg"></i>
 								<%end%>
 							<%else%>
-								<%= link_to "Remove Bookmark", stack_bookmark_path(stack.id), method: :delete, remote: true, class: "remove-bookmark" %>
+								<%= link_to stack_bookmark_path(stack.id), method: :delete, remote: true, class: "remove-book" do %>
+									<i class="fa fa-calendar-minus-o fa-lg"></i>
+								<%end%>
 							<%end%>
 						</div>
 						<!-- end of Bookmarks -->
 
-						<!-- Contributors to the Stack -->
-						<%sc=StackContributor.where(stack_id:stack.id)%>
-						<%sc.each do |contributor|%>
-							<%=link_to image_tag(contributor.user.avatar.mini.url), user_path(contributor.user.id)%>
+						<%arr=stack.stack_chronicles.pluck(:chronicle_id)%>
+						<!-- if there are stackchronicles, get a random image -->
+						<%if stack.stack_chronicles.any?%>
+							<!-- <div class="stack-inner1"> -->
+								<%if Chronicle.exists?(arr[0])%>
+									<div class="stack-inner2"><img src="<%=Chronicle.find(arr[0]).image.url%>"></div>
+								<%end%>
+								<%if Chronicle.exists?(arr[1])%>
+									<div class="stack-inner3"><img src="<%=Chronicle.find(arr[1]).image.url%>"></div>
+								<%end%>
+								<%if Chronicle.exists?(arr[2])%>
+									<div class="stack-inner3"><img src="<%=Chronicle.find(arr[2]).image.url%>"></div>
+								<%end%>
+								<%if Chronicle.exists?(arr[3])%>
+									<div class="stack-inner3"><img src="<%=Chronicle.find(arr[3]).image.url%>"></div>
+								<%end%>
+							<!-- </div> -->
 						<%end%>
-						<!-- end of Contributors -->
 					</div>
 				<%end%>
 			</div>
 		</div>
 
-		<h3>FEATURED CHRONICLES</h3>
-		<%@chronicles.each do |chronicle|%>
-		<div id="district-chronicles">
-			<%=link_to chronicle.title, chronicle_path(chronicle.id)%><br>
-				<%=link_to image_tag(chronicle.user.avatar.mini.url), user_path(chronicle.user.id)%>
-				<!-- Bookmarks -->
-				<div class="chronicle-bookmark-<%=chronicle.id%>">
-					<%if !chronicle.chronicle_bookmarks.exists?%>
-						<%= link_to "Bookmark", chronicle_bookmarks_path(chronicle_id: chronicle.id), method: :post, remote: true, class: "add-bookmark" %>
-					<%else%>
-						<%= link_to "Remove Bookmark", chronicle_bookmark_path(chronicle.id), method: :delete, remote: true, class: "remove-bookmark" %>
-					<%end%>
-				</div>
-				<!-- end of Bookmarks -->
+		<h3 id="center-text">FEATURED CHRONICLES</h3>
+		<div class="chronicle-box">
+			<div class='arrow-left2'><i class="fa fa-arrow-circle-left fa-2x"></i></div>
+	    <div class='arrow-right2'><i class="fa fa-arrow-circle-right fa-2x"></i></div>
 
+			<div class="chronicle-box-width">
+				<%@chronicles.each do |chronicle|%>
+					<div class="chronicle">
+						<div class="chronicle-inner1">
+							<img src="<%=chronicle.image.url%>">
+						</div>
+						<div class="chronicle-name">
+							<%=link_to chronicle.title, chronicle_path(chronicle.id)%><br>
+						</div>
+						<div class="chronicle-image">
+							<%=link_to image_tag(chronicle.user.avatar.mini.url), user_path(chronicle.user.id)%>
+						</div>
+						<!-- Bookmarks -->
+						<div class="chronicle-bookmark-<%=chronicle.id%>">
+							<%if !chronicle.chronicle_bookmarks.exists?%>
+								<%= link_to chronicle_bookmarks_path(chronicle_id: chronicle.id), method: :post, remote: true, class: "add-bookmark" do%>
+									<i class="fa fa-bookmark-o fa-2x"></i>
+								<%end%>
+							<%else%>
+								<%= link_to chronicle_bookmark_path(chronicle.id), method: :delete, remote: true, class: "remove-bookmark" do%>
+									<i class="fa fa-bookmark fa-2x"></i>
+								<%end%>
+							<%end%>
+						</div>
+							<!-- end of Bookmarks -->
+
+					</div>
+				<%end%>
+			</div>
 		</div>
-		<%end%>
 	</div>
 <%end%>
 <!-- ####################################################################### -->

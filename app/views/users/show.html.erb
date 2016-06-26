@@ -1,5 +1,79 @@
-<h1>Welcome <%=@user.fname%> <%=@user.lname%></h1>
-<%=link_to "Create Stack", new_stack_path%>
-<%=link_to "Create Chronicle", new_chronicle_path%>
-<%=link_to "Delete Account", user_path(@user.id), method: :delete%>
-<%=link_to "Update Account", edit_user_path(@user.id)%>
+<div id="user-bg"></div>
+
+<!-- revisit toggle feature -->
+<button class="side-button"> <<</button>
+<!-- sidebar -->
+<div id="user-side">
+	<h1><%=@user.fname%> <%=@user.lname%></h1>
+	<%=image_tag(@user.avatar.thumb.url)%><br>
+	<p>username: <%=@user.username%> </p>
+	<p>email: <%=@user.email%></p>
+
+	<%if @user==current_user%>
+		<%=button_to "Update Account", edit_user_path(@user.id), method: :get%><br>
+		<%=link_to "Create Stack", new_stack_path%>
+		<%=link_to "Create Chronicle", new_chronicle_path%>
+		<%=button_to "Delete Account", user_path(@user.id), method: :delete%>
+	<%end%>
+</div>
+<!-- end sidebar -->
+
+<!-- stacks -->
+<div id="user-stacks">
+	<h1>Stacks</h1>
+			<%@user.stacks.each do |stack|%>
+				<div class="stack-single">
+					<div class="stack-single-left">
+						<p><%=link_to stack.stack_name, stack_path(stack.id)%></p>
+						</div>
+						<div class="stack-single-right">
+							<%=link_to edit_stack_path(stack.id), class: "edit-stack" do%>
+								<i class="fa fa-pencil fa-lg" aria-hidden="true"></i>
+							<%end%>
+					</div>
+						<%arr=stack.stack_chronicles.pluck(:chronicle_id)%>
+						<!-- if there are stackchronicles, get a random image -->
+						<%if stack.stack_chronicles.any?%>
+							<div class="stack-single-post">
+								<%if Chronicle.exists?(arr[0])%>
+									<img src="<%=Chronicle.find(arr[0]).image.url%>">
+								<%end%>
+							</div>
+							<div class="stack-single-post">
+								<%if Chronicle.exists?(arr[1])%>
+									<img src="<%=Chronicle.find(arr[1]).image.url%>">
+								<%end%>
+							</div>
+							<div class="stack-single-post">
+								<%if Chronicle.exists?(arr[2])%>
+									<img src="<%=Chronicle.find(arr[2]).image.url%>">
+								<%end%>
+							</div>
+							<div class="stack-single-post">
+								<%if Chronicle.exists?(arr[3])%>
+									<img src="<%=Chronicle.find(arr[3]).image.url%>">
+								<%end%>
+							</div>
+							<!-- </div> -->
+						<%end%>
+				</div>
+			<%end%>
+</div>
+<!-- end stacks -->
+
+<div id="user-chronicles">
+	<!-- chronicles -->
+	<h1>Chronicles</h1>
+	<%@user.chronicles.each do |chronicle|%>
+		<div class="user-chronicle-single">
+			<div class="user-chronicle-title">
+				<%=link_to chronicle.title, chronicle_path(chronicle.id)%>
+				<%=link_to edit_chronicle_path(chronicle.id), class: "edit-chronicle" do%>
+					<i class="fa fa-pencil fa-lg" aria-hidden="true"></i>
+				<%end%>
+			</div>
+			<img src="<%=chronicle.image.url%>">
+		</div>
+	<%end%>
+</div>
+

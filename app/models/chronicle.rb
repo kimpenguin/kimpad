@@ -1,6 +1,7 @@
 class Chronicle < ActiveRecord::Base
 	belongs_to :user
-	has_and_belongs_to_many :stacks
+	# has_and_belongs_to_many :stacks, through: :stack_chronicles
+	# has_many :stacks, through: :stack_chronicles
 	has_many :chronicle_bookmarks
 	has_many :chronicle_categories
 	# validates :reference_url, uniqueness: true, on: :create

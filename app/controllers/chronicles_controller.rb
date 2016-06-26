@@ -92,6 +92,20 @@ class ChroniclesController < ApplicationController
 		end
 	end
 
+	def destroy
+		puts "in destroy chronicle"
+		@chronicle=Chronicle.find(params[:id])
+		@stack_chronicles=StackChronicle.where(chronicle_id:params[:id])
+		@chronicle_bookmarks=ChronicleBookmark.where(chronicle_id:params[:id])
+		@chronicle_categories=ChronicleCategory.where(chronicle_id:params[:id])
+		@stack_chronicles.destroy_all
+		@chronicle_bookmarks.destroy_all
+		@chronicle_categories.destroy_all
+		@chronicle.destroy
+		# check chronicle_id:2
+		redirect_to user_path(current_user.id)
+	end
+
 	# strong parameters
 	private
 	def chronicle_params

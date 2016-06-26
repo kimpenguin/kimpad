@@ -131,7 +131,7 @@ module StacksHelper
 		end
 
 		# if the number of contributors is greater than the ones in the database, add the new ones
-		if cat_arr.count>db_cat.count
+		if !cat_arr.nil? && (cat_arr.count>db_cat.count)
 			# add new contributors
 			cat_arr.each do |sc|
 				if StackCategory.exists?(stack_id: @stack.id, category_id: sc)
@@ -167,7 +167,7 @@ module StacksHelper
 			# end
 		end
 
-		if  cat_arr.count==db_cat.count
+		if !cat_arr.nil? && (cat_arr.count==db_cat.count)
 			puts "Yayyyy"
 		end
 	end

@@ -2,28 +2,34 @@
 <%= javascript_include_tag Ckeditor.cdn_url%>
 
 <h1>New Chronicle</h1>
-<p>edit this to a modal and allow user to choose between personal post or url</p>
+<a href="#manual" class="manual">Manual</a>
+<a href="#url" class="url">Url</a>
+
+
 <!-- MANUAL FORM -->
-<%= form_for @chronicle, html: { multipart: true } do |f| %>
-	<%=f.text_field :title, placeholder: "Title"%><br>
-	<%=f.cktext_area :body, :ckeditor => { :toolbar => 'mini'}%>
-	<%=f.file_field :image %><br>
+<div id="manual-chronicle">
+	<%= form_for @chronicle, html: { multipart: true } do |f| %>
+		<%=f.text_field :title, placeholder: "Title"%><br>
+		<%=f.cktext_area :body, :ckeditor => { :toolbar => 'mini'}%>
+		<%=f.file_field :image %><br>
 
-	<!-- Categories -->
-	Select Category <br>
-  <%@categories.each do |c|%>
-  	<%=check_box_tag 'categories[]', c.id -%>
-		<%=c.category_name -%><br>
-  <%end%>
-  <%=check_box_tag 'add new'%>
-  <%="add new" -%><br>
-	<%=text_field_tag :new_cat, nil,:placeholder=>"test" %><br>
-  <!-- End of Categories -->
+		<!-- Categories -->
+		Select Category <br>
+	  <%@categories.each do |c|%>
+	  	<%=check_box_tag 'categories[]', c.id -%>
+			<%=c.category_name -%><br>
+	  <%end%>
+	  <%=check_box_tag 'add new'%>
+	  <%="add new" -%><br>
+		<%=text_field_tag :new_cat, nil,:placeholder=>"test" %><br>
+	  <!-- End of Categories -->
 
-	<%=f.hidden_field :user_id, value:current_user.id%>
-	<%=f.hidden_field :manual, value:"true"%>
-	<%=f.submit %>
-<% end %>
+		<%=f.hidden_field :user_id, value:current_user.id%>
+		<%=f.hidden_field :manual, value:"true"%>
+		<%=f.submit %>
+	<% end %>
+
+</div>
 
 <!-- URL INFO -->
 <h1>OR ENTER URL</h1>
