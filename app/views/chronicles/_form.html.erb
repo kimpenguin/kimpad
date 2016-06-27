@@ -1,60 +1,78 @@
-<h1>Edit Chronicle</h1>
-<%=button_to "delete", chronicle_path(@chronicle.id), method: :delete%>
-<%= form_for @chronicle, html: { multipart: true } do |f| %>
-	<%=f.text_field :title, placeholder: "Title"%><br>
-	<%=f.cktext_area :body, :ckeditor => { :toolbar => 'mini'}%>
-	<%=f.file_field :image %><br>
-	
-  <!-- Categories -->
-	Select Category <br>
-	<%categories=@chronicle_categories.pluck(:category_id)%>
-	<%arr=[]%>
-	<!-- find the categories the user has utilized -->
-  <%@chronicles.each do |chronicle|%>
-  	<%chronicle.chronicle_categories.each do |category| -%>
-	  	<%arr.push(category.category_id)%>
-  	<%end%>
-  <%end%>
+<div id="new-chronicle-bg"></div>
+<div id="new-chronicle-header">
+	<h1>Edit Chronicle</h1>
+	<%=button_to "Delete", chronicle_path(@chronicle.id), method: :delete, class: "delete-chronicle-btn"%>
+</div>
+<div id="edit-chronicle">
+	<div class="edit-box">
+	<%= form_for @chronicle, html: { multipart: true } do |f| %>
+		<%=f.text_field :title, placeholder: "Title", class: "edit-chronicle-title"%><br>
+		<%=f.cktext_area :body, :ckeditor => { :toolbar => 'mini'}%>
+		<div class="choose-image">
+			<%=f.file_field :image %><br>
+		</div>
+		
+	  <!-- Categories -->
+		<div class="select-categories">
+			<h3>Select Category</h3>
+			<%categories=@chronicle_categories.pluck(:category_id)%>
+			<%arr=[]%>
+			<!-- find the categories the user has utilized -->
+		  <%@chronicles.each do |chronicle|%>
+		  	<%chronicle.chronicle_categories.each do |category| -%>
+			  	<%arr.push(category.category_id)%>
+		  	<%end%>
+		  <%end%>
 
-  <!-- categories the user has used -->
-  <%new_arr=arr.uniq%>
-  <%new_arr.each do |na|%>
-  	<%if categories.include?na%>
+		  <!-- categories the user has used -->
+		  <%new_arr=arr.uniq%>
+		  <div class="choices">
+			  <%new_arr.each do |na|%>
+			  	<%if categories.include?na%>
+						<%=check_box_tag 'categories[]', na, na -%>
+						<%=Category.find(na).category_name%> <br>
+					<%else%>
+							<%=check_box_tag 'categories[]', na -%>
+							<%=Category.find(na).category_name%> <br>
+					<%end%>
+				<%end%>
 
-			<%=check_box_tag 'categories[]', na, na -%>
-			<%=Category.find(na).category_name%> <br>
-		<%else%>
-				<%=check_box_tag 'categories[]', na -%>
-				<%=Category.find(na).category_name%> <br>
-		<%end%>
-	<%end%>
+			  <%=check_box_tag 'add new'%>
+			  <%="add new" -%><br>
+				<%=text_field_tag :new_cat, nil,:placeholder=>"New Category" %><br>
+			</div>
+		</div>
+	  <!-- End Categories -->
 
-  <%=check_box_tag 'add new'%>
-  <%="add new" -%><br>
-	<%=text_field_tag :new_cat, nil,:placeholder=>"New Category" %><br>
-  <!-- End Categories -->
-
-  <!-- Add to stack -->
-  Add to Stacks:<br>
-  <%stacks=@stack_chronicles.pluck(:stack_id)%>
-  <%stack_arr=[]%>
-  <%@stacks.each do |stack|%>
-  	<%stack_arr.push(stack.id)%>
-  <%end%>
-  	<%new_stack_arr=stack_arr.uniq%>
-  	<%new_stack_arr.each do |ns|%>
-  		<%if stacks.include?ns%>
-  			<%=check_box_tag 'stacks[]', ns, ns -%> 
-		  	<%=Stack.find(ns).stack_name%> <br>
-		  <%else%>
-		  	<%=check_box_tag 'stacks[]', ns-%> 
-		  	<%=Stack.find(ns).stack_name%> <br>
-	  	<%end%>
-  	<%end%>
-  <!-- End add to stack -->
+	  <!-- Add to stack -->
+	  <div class="select-stacks">
+		  <h3>Select Stacks:</h3>
+		  <%stacks=@stack_chronicles.pluck(:stack_id)%>
+		  <%stack_arr=[]%>
+		  <div class="choices">
+			  <%@stacks.each do |stack|%>
+			  	<%stack_arr.push(stack.id)%>
+			  <%end%>
+			  	<%new_stack_arr=stack_arr.uniq%>
+			  	<%new_stack_arr.each do |ns|%>
+			  		<%if stacks.include?ns%>
+			  			<%=check_box_tag 'stacks[]', ns, ns -%> 
+					  	<%=Stack.find(ns).stack_name%> <br>
+					  <%else%>
+					  	<%=check_box_tag 'stacks[]', ns-%> 
+					  	<%=Stack.find(ns).stack_name%> <br>
+				  	<%end%>
+			  	<%end%>
+			  </div>
+			</div>
+	  <!-- End add to stack -->
 
 
-	<%=f.hidden_field :user_id, value:current_user.id%>
-	<%=f.hidden_field :manual, value:"true"%>
-	<%=f.submit %>
-<% end %>
+		<%=f.hidden_field :user_id, value:current_user.id%>
+		<%=f.hidden_field :manual, value:"true"%>
+		<div class="create-chronicle-btn">
+			<%=f.submit %>
+		</div>
+	<% end %>
+</div>
+</div>

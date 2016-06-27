@@ -20,3 +20,13 @@
 
 // removed require turbolinks because it wasn't allowing document to load
 
+$(document).ready(function(){
+	$(".add").on('click',function(){
+		$(".modal").show();
+		$("#overlay").show();
+	})
+	$("#overlay").on('click',function(){
+		$(".modal").hide();
+		$("#overlay").hide();
+	});
+})

@@ -22,12 +22,15 @@
 	<nav>
 		<ul>
 		  <%if logged_in?%>
-			  <li><%=link_to "ORME", root_path%></li>
-			  <li><%=link_to "Explore", districts_path%></li>
-			  <li><%=link_to "MY Profile", user_path(current_user.id)%></li>
-				<li><%=link_to "Add Stack", new_stack_path%></li>
-				<li><%=link_to "Add Chronicle", new_chronicle_path%></li>
+		  	<div id="left">
+				  <li><%=link_to "ORME", root_path%></li>
+				  <li><%=link_to "Explore", districts_path%></li>
+				  <li><%=link_to "Profile", user_path(current_user.id)%></li>
+				  <li><a href="#" class="add"><i class="fa fa-plus fa-lg"></i></a></li>
+				</div>
+				<div id="right"> 
 			  <li><%=link_to "Log Out", logout_path, method: :delete%></li>
+			  </div>
 		  <%else%>
 			  <li><%=link_to "ORME", root_path, id:'logo-nl'%></li>
 			  <li><%=link_to "Log In", login_path%></li>
@@ -35,6 +38,14 @@
 		  <%end%>
 		</ul>
 	</nav>
+
+	<div id="overlay"></div>
+	<div class="modal">
+		<div class="modal-content">
+			<%=button_to "Add Stack", new_stack_path, method: :get, class: "add-stack-btn"%>
+			<%=button_to "Add Chronicle", new_chronicle_path, method: :get,class: "add-chronicle-btn"%>
+		</div>
+	</div>
 	<!-- end of navigation bar -->
 	<%=flash[:notice]%>
 
