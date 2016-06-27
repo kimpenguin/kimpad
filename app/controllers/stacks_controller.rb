@@ -28,8 +28,11 @@ class StacksController < ApplicationController
 
 
 		# if the category doesn't already exist, create it
-		if !Stack.where(stack_name: params[:stack][:stack_name], user_id: params[:stack][:user_id]).first
-			@stack.save
+		if Stack.exists?(stack_name: params[:stack][:stack_name], user_id: params[:stack][:user_id])
+			puts "this exists"
+		else
+			puts "create"
+			@stack.save!
 
 			add_stack_contributors #add the contributors in the database
 

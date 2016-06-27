@@ -80,11 +80,35 @@ module StacksHelper
 	def add_stack_categories
 		puts "adding categories"
 		cats=params[:categories]
+		cat_str=params[:new_cat]
 		puts "the categories are #{cats}"
-		cats.each do |c|
-			StackCategory.create(stack_id:@stack.id, category_id:c)
+
+		# if user creates new categories
+		if cat_str.length>0
+			new_arr=cat_str.split(",")
+			new_arr.each do |n|
+				puts n
+				# check if the category exists
+				if Category.exists?(category_name:n)
+					puts "the category exists, so add to StackCategory"
+					nc=Category.where(category_name:n)
+					StackCategory.create(stack_id:@stack.id, category_id:nc.id)
+				else
+					#adds the category and adds the category to the stack
+					nc=Category.create(category_name:n)
+					StackCategory.create(stack_id:@stack.id,category_id:nc.id)
+				end
+			end
 		end
 
+		# if users checkboxes
+		if cats.nil?
+			puts "nothing to add"
+		else
+			cats.each do |c|
+				StackCategory.create(stack_id:@stack.id, category_id:c)
+			end
+		end
 	end
 
 	def update_stack_categories

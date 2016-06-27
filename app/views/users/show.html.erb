@@ -2,18 +2,19 @@
 <div id="user-header">
 	<button class="user-stacks">Stacks</button>
 	<button class="user-chronicles">Chronicles</button>
+	<button class="user-bookmarks">Bookmarks</button>
 </div>
 
 <!-- revisit toggle feature -->
 <!-- <button class="side-button"> <<</button> -->
 <!-- sidebar -->
 <div id="user-side">
-	<h1><%=@user.fname%> <%=@user.lname%></h1>
+	<h1><%=@user.username%> </h1>
 	<%=image_tag(@user.avatar.thumb.url)%><br>
-	<p>username: <%=@user.username%> </p>
-	<p>email: <%=@user.email%></p>
 
 	<%if @user==current_user%>
+		<p><%=@user.fname%> <%=@user.lname%></p>
+		<p>email: <%=@user.email%></p>
 		<%=button_to "Update Account", edit_user_path(@user.id), method: :get%><br>
 		<%=button_to "Delete Account", user_path(@user.id), method: :delete, class: "delete-user"%>
 	<%end%>
@@ -21,21 +22,21 @@
 <!-- end sidebar -->
 
 <div id="all">
-<!-- stacks -->
-<div id="us">
-	<div id="user-stacks">
-		<div id="user-box">
-			<h1>Stacks</h1>
-			<%@user.stacks.each do |stack|%>
-				<div class="stack-single">
-					<div class="stack-single-left">
-						<p><%=link_to stack.stack_name, stack_path(stack.id)%></p>
+	<!-- stacks -->
+	<div id="us">
+		<div id="user-stacks">
+			<div id="user-box">
+				<h1>Stacks</h1>
+				<%@user.stacks.each do |stack|%>
+					<div class="stack-single">
+						<div class="stack-single-left">
+							<p><%=link_to stack.stack_name, stack_path(stack.id)%></p>
+							</div>
+							<div class="stack-single-right">
+								<%=link_to edit_stack_path(stack.id), class: "edit-stack" do%>
+									<i class="fa fa-pencil fa-lg" aria-hidden="true"></i>
+								<%end%>
 						</div>
-						<div class="stack-single-right">
-							<%=link_to edit_stack_path(stack.id), class: "edit-stack" do%>
-								<i class="fa fa-pencil fa-lg" aria-hidden="true"></i>
-							<%end%>
-					</div>
 						<%arr=stack.stack_chronicles.pluck(:chronicle_id)%>
 						<!-- if there are stackchronicles, get a random image -->
 						<%if stack.stack_chronicles.any?%>
@@ -61,12 +62,12 @@
 							</div>
 							<!-- </div> -->
 						<%end%>
-				</div>
-			<%end%>
+					</div>
+				<%end%>
+			</div>
 		</div>
 	</div>
-</div>
-<!-- end stacks -->
+	<!-- end stacks -->
 
 	<div id="uc">
 		<div id="user-chronicles">
@@ -87,4 +88,61 @@
 			</div>
 		</div>
 	</div>
+
+	<!-- bookmarks -->
+	<div id="bks">
+		<div id="user-stacks">
+			<div id="user-box">
+				<!-- chronicles -->
+				<h1>Bookmarked Stacks</h1>
+				<%@user.stack_bookmarks.each do |sbk|%>
+					<div class="stack-single">
+						<div class="stack-single-left">
+							<p><%=link_to sbk.stack.stack_name, stack_path(sbk.stack.id)%></p>
+						</div>
+						<%arr=sbk.stack.stack_chronicles.pluck(:chronicle_id)%>
+						<!-- if there are stackchronicles, get a random image -->
+						<%if sbk.stack.stack_chronicles.any?%>
+							<div class="stack-single-post">
+								<%if Chronicle.exists?(arr[0])%>
+									<img src="<%=Chronicle.find(arr[0]).image.url%>">
+								<%end%>
+							</div>
+							<div class="stack-single-post">
+								<%if Chronicle.exists?(arr[1])%>
+									<img src="<%=Chronicle.find(arr[1]).image.url%>">
+								<%end%>
+							</div>
+							<div class="stack-single-post">
+								<%if Chronicle.exists?(arr[2])%>
+									<img src="<%=Chronicle.find(arr[2]).image.url%>">
+								<%end%>
+							</div>
+							<div class="stack-single-post">
+								<%if Chronicle.exists?(arr[3])%>
+									<img src="<%=Chronicle.find(arr[3]).image.url%>">
+								<%end%>
+							</div>
+							<!-- </div> -->
+						<%end%>
+					</div>
+				<%end%>
+			</div>
+		</div>
+		<div id="user-chronicles">
+			<div id="user-box">
+				<!-- chronicles -->
+				<h1>Bookmarked Chronicles</h1>
+				<%@user.chronicle_bookmarks.each do |cbk|%>
+					<div class="user-chronicle-single">
+						<div class="user-chronicle-title">
+							<%=link_to cbk.chronicle.title, chronicle_path(cbk.chronicle.id)%>
+						</div>
+						<img src="<%=cbk.chronicle.image.url%>">
+					</div>
+				<%end%>
+			</div>
+		</div>
+	</div>
+	<!-- end bookmarks -->
 </div>

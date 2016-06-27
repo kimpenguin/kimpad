@@ -46,12 +46,28 @@ $(document).ready(function(){
   // end toggle sidebar
 
   $(".user-stacks").on('click',function(){
-    $("#us").show();
+    $("#us").slideDown();
     $("#uc").hide();
+    $("#bks").hide();
+    $(".user-stacks").css({"background-color": "lightblue", "border-color": "lightblue", "color": "black"});
+    $(".user-chronicles").css({"background-color": "darkgrey", "border-color": "darkgrey", "color": "black"});
+    $(".user-bookmarks").css({"background-color": "darkgrey", "border-color": "darkgrey", "color": "black"});
   })
   $(".user-chronicles").on('click',function(){
+    $("#uc").slideDown();
     $("#us").hide();
-    $("#uc").show();
+    $("#bks").hide();
+    $(".user-chronicles").css({"background-color": "lightblue", "border-color": "lightblue", "color": "black"});
+    $(".user-stacks").css({"background-color": "darkgrey", "border-color": "darkgrey", "color": "black"});
+    $(".user-bookmarks").css({"background-color": "darkgrey", "border-color": "darkgrey", "color": "black"});
+  })
+  $(".user-bookmarks").on('click',function(){
+    $("#bks").slideDown();
+    $("#us").hide();
+    $("#uc").hide();
+    $(".user-bookmarks").css({"background-color": "lightblue", "border-color": "lightblue", "color": "black"});
+    $(".user-chronicles").css({"background-color": "darkgrey", "border-color": "darkgrey", "color": "black"});
+    $(".user-stacks").css({"background-color": "darkgrey", "border-color": "darkgrey", "color": "black"});
   })
 
 });

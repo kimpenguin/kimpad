@@ -1,7 +1,8 @@
 class User < ActiveRecord::Base
 	has_many :stacks
 	has_many :chronicles
-	has_many :bookmarks
+  has_many :chronicle_bookmarks
+	has_many :stack_bookmarks
 	has_many :lists
   has_many :stack_contributors
   # has_many :stacks, through: :stack_contributors

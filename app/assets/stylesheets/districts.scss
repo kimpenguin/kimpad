@@ -282,6 +282,25 @@
   	}
   }
 }
+.chronicle2{
+	width: 200px;
+	height: 300px;
+  background-color:white;
+  border: 2px black solid;
+  margin: 0 0 10px 10px;
+  // /*margin-bottom: 10px;*/
+  float:left;
+  overflow: auto;
+  a{
+  	margin-left: 5px;
+  	color:black;
+  	/*line-height: 0;*/
+  	text-decoration: none;
+  	&:hover{
+  		color:blue;
+  	}
+  }
+}
 .chronicle-inner1{
 	width: 200px;
 	height: 200px;
@@ -302,7 +321,7 @@
 		// padding: 2px;
   	float: right;
 		// background-color: yellow;
-		margin-top: 50px;
+		margin-top: 48px;
 		margin-right: 5px;
 		// text-align: right;
 		overflow: hidden;
@@ -320,7 +339,7 @@
 	width: 80%; 
 	float: left;
 	height: 33.34px;
-	margin-top: 35px;
+	margin-top: 33px;
 	/*background-color: orange;*/
 }
 /********************************************************/
@@ -340,4 +359,44 @@ a.remove-bookmark{
 }
 a.add-bookmark{
 	color:black;
+}
+
+#district-header{
+	width: 100%;
+	background: rgba(0, 0, 0, 0.6);
+	margin:0 auto 10px auto;
+	text-align: center;
+	padding: 30px 0px 30px 0px;
+	h1{
+		text-align: center;
+		line-height: 0px;
+		color: white;
+	}
+	i{
+		color:lightgray;
+	}
+	button{
+		margin-top: 10px;
+		width:100px;
+		background: darkgrey;
+		border-radius: 4px;
+		border: solid darkgrey;
+		height:30px;
+		color: white;
+		/*margin: 10px;*/
+		&:hover{
+			background:lightgrey;
+			border-color:lightgrey; 
+			color:black;
+		}
+	}
+}
+#ds{
+	display:none;
+}
+// #df{
+// 	display:none;
+// }
+#dc{
+	display:none;
 }

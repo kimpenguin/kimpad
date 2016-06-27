@@ -55,4 +55,30 @@ $(document).ready(function(){
     $(".chronicle-box").animate({scrollLeft: "+="+boxwidth});
   });  
 
+   $(".district-stacks").on('click',function(){
+    $("#ds").slideDown(500);
+    $("#dc").hide();
+    $("#df").hide();
+    $(".district-stacks").css({"background-color": "lightblue", "border-color": "lightblue", "color": "black"});
+    $(".district-chronicles").css({"background-color": "darkgrey", "border-color": "darkgrey", "color": "black"});
+    $(".district-featured").css({"background-color": "darkgrey", "border-color": "darkgrey", "color": "black"});
+
+  })
+  $(".district-chronicles").on('click',function(){
+    $("#ds").hide();
+    $("#dc").slideDown(500);
+    $("#df").hide();
+    $(".district-chronicles").css({"background-color": "lightblue", "border-color": "lightblue", "color": "black"});
+    $(".district-stacks").css({"background-color": "darkgrey", "border-color": "darkgrey", "color": "black"});
+    $(".district-featured").css({"background-color": "darkgrey", "border-color": "darkgrey", "color": "black"});
+  })
+  $(".district-featured").on('click',function(){
+    $("#ds").hide();
+    $("#dc").hide();
+    $("#df").slideDown(500);
+    $(".district-featured").css({"background-color": "lightblue", "border-color": "lightblue", "color": "black"});
+    $(".district-chronicles").css({"background-color": "darkgrey", "border-color": "darkgrey", "color": "black"});
+    $(".district-stacks").css({"background-color": "darkgrey", "border-color": "darkgrey", "color": "black"});
+  })
+
 });
