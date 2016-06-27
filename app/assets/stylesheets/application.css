@@ -91,7 +91,7 @@ nav li a:hover {
     background: lightgray;
     border: 2px lightgray solid;
     border-radius: 4px;
-    margin: 15% auto;
+    margin: 5% auto;
 }
 .add-stack-btn:hover{
     background: darkgray;
