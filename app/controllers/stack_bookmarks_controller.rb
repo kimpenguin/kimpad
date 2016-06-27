@@ -18,7 +18,13 @@ class StackBookmarksController < ApplicationController
 	def destroy
 		puts "destroying Stack favorite"
 		puts params.inspect
+		if StackBookmark.exists?(stack_id: params[:id], user_id:current_user.id)
+			puts "exists"
+		else
+			puts "doesn't exist"
+		end
 		@sbookmark = StackBookmark.where(stack_id: params[:id], user_id:current_user.id).first
+		puts "hello #{@sbookmark}"
 		puts @sbookmark
 		@stack = Stack.find(@sbookmark.stack_id)
 		puts @stack

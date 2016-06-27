@@ -1,9 +1,83 @@
-<h1><%=@category.category_name%></h1>
-<h2>Stacks</h2>
+<div id="category-header">
+	<h1><%=@category.category_name%></h1>
+	<button class="category-stacks">Stacks</button>
+	<button class="category-chronicles">Chronicles</button>
+</div>
 
-<h2>Chronicles</h2>
-<%@chronicles.each do |c|%>
-	<%=link_to c.chronicle.title, chronicle_path(c.chronicle.id)%>
-	<%=raw c.chronicle.body%>
-	<%=link_to image_tag(c.chronicle.user.avatar.mini), user_path(c.chronicle.user.id)%><br>
-<%end%>
+<div id="category-stacks">
+	<%@stacks.each do |stack|%>
+		<div class="stack-single">
+			<div class="stack-single-left">
+				<p><%=link_to stack.stack.stack_name, stack_path(stack.stack.id)%></p>
+				</div>
+				<div class="stack-single-right">
+					<%if stack.stack.user==current_user%>
+						<%=link_to edit_stack_path(stack.stack.id), class: "edit-stack" do%>
+							<i class="fa fa-pencil fa-lg" aria-hidden="true"></i>
+						<%end%>
+					<%else%>
+						<%if !stack.stack.stack_bookmarks.exists?%>
+							<%= link_to stack_bookmarks_path(stack_id: stack.stack.id), method: :post, remote: true, class: "add-book" do%>
+								<i class="fa fa-book" aria-hidden="true"></i>
+							<%end%>
+						<%else%>
+							<%= link_to stack_bookmark_path(stack.stack.id), method: :delete, remote: true, class: "remove-book" do %>
+								<i class="fa fa-book" aria-hidden="true"></i>
+							<%end%>
+						<%end%>
+					<%end%>
+			</div>
+				<%arr=stack.stack.stack_chronicles.pluck(:chronicle_id)%>
+				<!-- if there are stackchronicles, get a random image -->
+				<%if stack.stack.stack_chronicles.any?%>
+					<div class="stack-single-post">
+						<%if Chronicle.exists?(arr[0])%>
+							<img src="<%=Chronicle.find(arr[0]).image.url%>">
+						<%end%>
+					</div>
+					<div class="stack-single-post">
+						<%if Chronicle.exists?(arr[1])%>
+							<img src="<%=Chronicle.find(arr[1]).image.url%>">
+						<%end%>
+					</div>
+					<div class="stack-single-post">
+						<%if Chronicle.exists?(arr[2])%>
+							<img src="<%=Chronicle.find(arr[2]).image.url%>">
+						<%end%>
+					</div>
+					<div class="stack-single-post">
+						<%if Chronicle.exists?(arr[3])%>
+							<img src="<%=Chronicle.find(arr[3]).image.url%>">
+						<%end%>
+					</div>
+					<!-- </div> -->
+				<%end%>
+		</div>
+	<%end%>
+</div>
+
+<div id="category-chronicles">
+<%@chronicles.each do |chronicle|%>
+		<div class="user-chronicle-single">
+			<div class="user-chronicle-title">
+				<%=link_to chronicle.chronicle.title, chronicle_path(chronicle.chronicle.id)%>
+				<%if chronicle.chronicle.user==current_user%>
+					<%=link_to edit_chronicle_path(chronicle.chronicle.id), class: "edit-chronicle" do%>
+						<i class="fa fa-pencil fa-lg" aria-hidden="true"></i>
+					<%end%>
+				<%else%>
+					<%if !chronicle.chronicle.chronicle_bookmarks.exists?%>
+						<%= link_to chronicle_bookmarks_path(chronicle_id: chronicle.chronicle.id), method: :post, remote: true, class: "add-bookmark" do%>
+							<i class="fa fa-bookmark-o fa-2x"></i>
+						<%end%>
+					<%else%>
+						<%= link_to chronicle_bookmark_path(chronicle.chronicle.id), method: :delete, remote: true, class: "remove-bookmark" do%>
+							<i class="fa fa-bookmark fa-2x"></i>
+						<%end%>
+					<%end%>
+				<%end%>
+			</div>
+			<img src="<%=chronicle.chronicle.image.url%>">
+		</div>
+	<%end%>
+</div>

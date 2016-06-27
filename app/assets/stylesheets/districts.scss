@@ -283,13 +283,15 @@
 }
 
 /*need to edit because of chronicle ids*/
-@for $i from 1 through 200 {
+@for $i from 1 through 500 {
   .chronicle-bookmark-#{$i} { 
   	// width: 20%; 
-		height: 30px;
+		height: 15px;
 		// padding: 2px;
-  	// float: right;
-		/*background-color: yellow;*/
+  	float: right;
+		// background-color: yellow;
+		margin-top: 50px;
+		margin-right: 5px;
 		// text-align: right;
 		overflow: hidden;
 		/*display: inline;*/
@@ -306,15 +308,24 @@
 	width: 80%; 
 	float: left;
 	height: 33.34px;
-	/*margin-top: 15%;*/
+	margin-top: 35px;
 	/*background-color: orange;*/
 }
 /********************************************************/
 a.remove-book{
 	padding-right:5px;
 	margin-top: 5px;
-	color:red;
+	color:green;
 }
 a.add-book{
-	color:gray;
+	padding-right:5px;
+	margin-top: 5px;
+	color:black;
+}
+
+a.remove-bookmark{
+	color:green;
+}
+a.add-bookmark{
+	color:black;
 }

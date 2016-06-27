@@ -59,9 +59,6 @@
 						<%end%>
 					</div>
 				<%end%>
-				<div class="stack">
-					<%=link_to "Sign Up", new_user_path%><br>
-				</div>
 			</div>
 		</div>
 
@@ -97,22 +94,25 @@
 			<div class="stack-box-width">
 				<%@stacks.each do |stack|%>
 					<div class="stack">
-						<div class="stack-name">
+						<div class="stack-name">							
 							<p><%=link_to stack.stack_name, stack_path(stack.id)%></p>
 						</div>
 
 						<!-- Bookmarks -->
 						<div class="stack-bookmark-<%=stack.id%>">
-							<%if !stack.stack_bookmarks.exists?%>
-								<%= link_to stack_bookmarks_path(stack_id: stack.id), method: :post, remote: true, class: "add-book" do%>
-									<i class="fa fa-calendar-check-o fa-lg"></i>
-								<%end%>
-							<%else%>
-								<%= link_to stack_bookmark_path(stack.id), method: :delete, remote: true, class: "remove-book" do %>
-									<i class="fa fa-calendar-minus-o fa-lg"></i>
+							<%if !(stack.user_id==current_user.id)%>
+								<%if !stack.stack_bookmarks.exists?(stack_id: stack.id, user_id:current_user.id)%>
+									<%= link_to stack_bookmarks_path(stack_id: stack.id), method: :post, remote: true, class: "add-book" do%>
+										<i class="fa fa-book" aria-hidden="true"></i>
+									<%end%>
+								<%else%>
+									<%= link_to stack_bookmark_path(stack.id), method: :delete, remote: true, class: "remove-book" do %>
+										<i class="fa fa-book" aria-hidden="true"></i>
+									<%end%>
 								<%end%>
 							<%end%>
 						</div>
+
 						<!-- end of Bookmarks -->
 
 						<%arr=stack.stack_chronicles.pluck(:chronicle_id)%>
@@ -156,18 +156,20 @@
 							<%=link_to image_tag(chronicle.user.avatar.mini.url), user_path(chronicle.user.id)%>
 						</div>
 						<!-- Bookmarks -->
-						<div class="chronicle-bookmark-<%=chronicle.id%>">
-							<%if !chronicle.chronicle_bookmarks.exists?%>
-								<%= link_to chronicle_bookmarks_path(chronicle_id: chronicle.id), method: :post, remote: true, class: "add-bookmark" do%>
-									<i class="fa fa-bookmark-o fa-2x"></i>
+						<%if chronicle.user_id!=current_user.id%>
+							<div class="chronicle-bookmark-<%=chronicle.id%>">
+								<%if !chronicle.chronicle_bookmarks.exists?%>
+									<%= link_to chronicle_bookmarks_path(chronicle_id: chronicle.id), method: :post, remote: true, class: "add-bookmark" do%>
+										<i class="fa fa-bookmark"></i>
+									<%end%>
+								<%else%>
+									<%= link_to chronicle_bookmark_path(chronicle.id), method: :delete, remote: true, class: "remove-bookmark" do%>
+										<i class="fa fa-bookmark"></i>
+									<%end%>
 								<%end%>
-							<%else%>
-								<%= link_to chronicle_bookmark_path(chronicle.id), method: :delete, remote: true, class: "remove-bookmark" do%>
-									<i class="fa fa-bookmark fa-2x"></i>
-								<%end%>
-							<%end%>
-						</div>
-							<!-- end of Bookmarks -->
+							</div>
+						<%end%>
+						<!-- end of Bookmarks -->
 
 					</div>
 				<%end%>

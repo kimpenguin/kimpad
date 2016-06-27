@@ -7,21 +7,51 @@
 	
   <!-- Categories -->
 	Select Category <br>
-	<%cats=@chronicle_categories.pluck(:category_id)%>
-  <%@categories.each do |c|%>
-  	<%if cats.include?c.id%>
-	  	<%=check_box_tag 'categories[]', c.id, c.id -%>
-			<%=c.category_name -%><br>
-		<%else%>
-	  	<%=check_box_tag 'categories[]', c.id -%>
-			<%=c.category_name -%><br>
-		<%end%>
+	<%categories=@chronicle_categories.pluck(:category_id)%>
+	<%arr=[]%>
+	<!-- find the categories the user has utilized -->
+  <%@chronicles.each do |chronicle|%>
+  	<%chronicle.chronicle_categories.each do |category| -%>
+	  	<%arr.push(category.category_id)%>
+  	<%end%>
   <%end%>
+
+  <!-- categories the user has used -->
+  <%new_arr=arr.uniq%>
+  <%new_arr.each do |na|%>
+  	<%if categories.include?na%>
+
+			<%=check_box_tag 'categories[]', na, na -%>
+			<%=Category.find(na).category_name%> <br>
+		<%else%>
+				<%=check_box_tag 'categories[]', na -%>
+				<%=Category.find(na).category_name%> <br>
+		<%end%>
+	<%end%>
 
   <%=check_box_tag 'add new'%>
   <%="add new" -%><br>
-	<%=text_field_tag :new_cat, nil,:placeholder=>"test" %><br>
+	<%=text_field_tag :new_cat, nil,:placeholder=>"New Category" %><br>
   <!-- End Categories -->
+
+  <!-- Add to stack -->
+  Add to Stacks:<br>
+  <%stacks=@stack_chronicles.pluck(:stack_id)%>
+  <%stack_arr=[]%>
+  <%@stacks.each do |stack|%>
+  	<%stack_arr.push(stack.id)%>
+  <%end%>
+  	<%new_stack_arr=stack_arr.uniq%>
+  	<%new_stack_arr.each do |ns|%>
+  		<%if stacks.include?ns%>
+  			<%=check_box_tag 'stacks[]', ns, ns -%> 
+		  	<%=Stack.find(ns).stack_name%> <br>
+		  <%else%>
+		  	<%=check_box_tag 'stacks[]', ns-%> 
+		  	<%=Stack.find(ns).stack_name%> <br>
+	  	<%end%>
+  	<%end%>
+  <!-- End add to stack -->
 
 
 	<%=f.hidden_field :user_id, value:current_user.id%>

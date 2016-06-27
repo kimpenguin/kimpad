@@ -44,4 +44,14 @@ $(document).ready(function(){
     }
   });
   // end toggle sidebar
+
+  $(".user-stacks").on('click',function(){
+    $("#us").show();
+    $("#uc").hide();
+  })
+  $(".user-chronicles").on('click',function(){
+    $("#us").hide();
+    $("#uc").show();
+  })
+
 });

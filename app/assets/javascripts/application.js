@@ -11,10 +11,12 @@
 // about supported directives.
 //
 //= require jquery-ui
-//= require jquery-ui/autocomplete
 //= require jquery.turbolinks
+//= require jquery_ujs
+//= require jquery-ui/autocomplete
 //= require ckeditor/init
 //= require jquery
-//= require jquery_ujs
-//= require turbolinks
 //= require_tree .
+
+// removed require turbolinks because it wasn't allowing document to load
+

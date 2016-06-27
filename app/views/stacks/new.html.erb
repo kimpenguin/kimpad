@@ -1,28 +1,46 @@
-<h1>New Stack</h1>
+<div id="stack-main-bg"></div>
 
+<div class="new-stack-main">
+  <h1>New Stack</h1>
+</div>  
 
-<%= form_for @stack do |f| %>
-	<%=f.text_field :stack_name, placeholder: "Stack Name"%><br>
-	<%=f.hidden_field :user_id, value:current_user.id%>
-  <!-- Contributor checkboxes -->
-  Select Contributors <br>
-  <%@users.each do |u|%>
-	  <%=check_box_tag 'users[]', u.id -%>
-	  <%=u.username -%><br>
-  <%end%>
-  <!-- end Contributor checkboxes -->
+<div id="new-stack-body">
+  <%= form_for @stack do |f| %>
+  	<%=f.text_field :stack_name, placeholder: "Stack Name"%><br>
+  	<%=f.hidden_field :user_id, value:current_user.id%>
+    <!-- Contributor checkboxes -->
+    <div class="select-contributors">
+      <h3>Select Contributors</h3>
+      <%@users.each do |u|%>
+        <div class="choices">
+      	  <%=check_box_tag 'users[]', u.id -%>
+          <%=u.username -%>
+        </div>
+      <%end%>
 
-  <!-- Categories -->
-	Select Category <br>
-  <%@categories.each do |c|%>
-  	<%=check_box_tag 'categories[]', c.id -%>
-		<%=c.category_name -%><br>
-  <%end%>
+    </div>
+    <!-- end Contributor checkboxes -->
 
-  <%=check_box_tag 'add new'%>
-  <%="add new" -%><br>
-	<%=text_field_tag :new_cat, nil,:placeholder=>"test" %><br>
-  <!-- End Categories -->
+    <!-- Categories -->
+    <div class="select-categories-stack">
+      <h3>Select Category</h3>
+      <div class="choices">
+        <%@categories.each do |c|%>
+            	<%=check_box_tag 'categories[]', c.id -%>
+          		<%=c.category_name -%><br>
+        <%end%>
 
-	<%=f.submit %>
-<% end %>
+        <%=check_box_tag 'add new'%>
+        <%="add new" -%><br>
+        <div class="new-category-name">
+          <%=text_field_tag :new_cat, nil,:placeholder=>"New Category Name" %><br>
+        </div>
+      </div>
+    </div>
+    <!-- End Categories -->
+    <div class="create-chronicle-btn">
+    	<%=f.submit %>
+    </div>
+  <% end %>
+
+</div>

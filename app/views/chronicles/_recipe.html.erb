@@ -1,21 +1,49 @@
-<%= form_for @chronicle do |f| %>
-	<%=f.text_area :reference_url%><br>
-	<%=f.text_field :title%><br>
-	<%=f.cktext_area :body, :ckeditor => { :toolbar => 'mini'}, id:"test"%>
-	<%=f.text_area :remote_image_url, id:"pleasesave" %><br>
+<div class="url-rendered">
+  <%= form_for @chronicle do |f| %>
+    <%=f.text_area :reference_url%><br>
+  	<%=f.text_field :title, class: "url-title"%><br>
+  	<%=f.cktext_area :body, :ckeditor => { :toolbar => 'mini'}, id:"test"%>
+  	<%=f.text_area :remote_image_url, placeholder: "Image URL", id:"pleasesave" %><br>
 
-	<!-- Categories -->
-	Select Category <br>
-  <%@categories.each do |c|%>
-  	<%=check_box_tag 'categories[]', c.id -%>
-		<%=c.category_name -%><br>
-  <%end%>
-  <%=check_box_tag 'add new'%>
-  <%="add new" -%><br>
-	<%=text_field_tag :new_cat, nil,:placeholder=>"test" %><br>
-  <!-- End of Categories -->
+  	<!-- Categories -->
+    <div class="select-categories">
+    	<h3>Select Categories</h3>
+      <%arr=[]%>
+      <%@chronicles.each do |c2|%>
+      	<%c2.chronicle_categories.each do |cat| -%>
+    	  	<%arr.push(cat.category_id)%>
+      	<%end%>
+      <%end%>
+      <!-- checkboxes -->
+      <%new_arr=arr.uniq%>
+      <div class="choices">
+        <%new_arr.each do |new_cat|%>
+      	  <%=check_box_tag 'categories[]', new_cat -%>
+        	<%=Category.find(new_cat).category_name%> <br>
+        <%end%>
+        <%=check_box_tag 'add new'%>
+        <%="add new" -%><br>
+      	<%=text_field_tag :new_cat, nil,:placeholder=>"New Category" %><br>
+      </div>
+    </div>
+    <!-- End of Categories -->
 
-	<%=f.hidden_field :user_id, value:current_user.id%>
-	<%=f.hidden_field :manual, value:"from-remote"%>
-	<%=f.submit %>
-<% end %>
+    <!-- Add to stack -->
+    <div class="select-stacks">
+      <h3>Add to Stacks:</h3>
+      <%@stacks.each do |stack|%>
+        <div class="choices">
+        	<%=check_box_tag 'stacks[]', stack.id -%> 
+        	<%=stack.stack_name%> <br>
+        </div>
+      <%end%>
+    </div>
+    <!-- End add to stack -->
+
+  	<%=f.hidden_field :user_id, value:current_user.id%>
+  	<%=f.hidden_field :manual, value:"from-remote"%>
+    <div class="create-chronicle-btn">
+    	<%=f.submit %>
+    </div>
+  <% end %>
+</div>

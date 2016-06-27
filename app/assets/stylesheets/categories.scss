@@ -1,3 +1,22 @@
-// Place all the styles related to the Categories controller here.
-// They will automatically be included in application.css.
-// You can use Sass (SCSS) here: http://sass-lang.com/
+
+#category-header{
+	width: 100%;
+	background: rgba(0, 0, 0, 0.6);
+	margin:0 auto 10px auto;
+	text-align: center;
+	padding: 30px 0px 30px 0px;
+	color: white;
+	h1{
+		text-align: center;
+		line-height: 0px;
+	}
+}
+#category-stacks{
+	display: none;
+	/*display:inline-block;
+	width: 100%; 
+	background: blue;*/
+}
+#category-chronicles{
+	display: none;
+}

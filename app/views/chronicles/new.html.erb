@@ -1,43 +1,82 @@
 <%=flash[:alert]%>
 <%= javascript_include_tag Ckeditor.cdn_url%>
-
-<h1>New Chronicle</h1>
-<a href="#manual" class="manual">Manual</a>
-<a href="#url" class="url">Url</a>
+<div id="new-chronicle-bg"></div>
+<div id="new-chronicle-header">
+	<h1>Add Chronicle</h1>
+	<button class="manual">Manual</button>
+	<button class="url">Url</button>
+</div>
 
 
 <!-- MANUAL FORM -->
 <div id="manual-chronicle">
-	<%= form_for @chronicle, html: { multipart: true } do |f| %>
-		<%=f.text_field :title, placeholder: "Title"%><br>
-		<%=f.cktext_area :body, :ckeditor => { :toolbar => 'mini'}%>
-		<%=f.file_field :image %><br>
+	<div class="manual-box">
+		<%= form_for @chronicle, html: { multipart: true } do |f| %>
+			<%=f.text_field :title, placeholder: "Title", class: "manual-title"%><br>
+			<%=f.cktext_area :body, :ckeditor => { :toolbar => 'mini'}%>
+			<div class="choose-image">
+				<h3>Upload an image:</h3> 
+				<%=f.file_field :image%>
+			</div>
 
-		<!-- Categories -->
-		Select Category <br>
-	  <%@categories.each do |c|%>
-	  	<%=check_box_tag 'categories[]', c.id -%>
-			<%=c.category_name -%><br>
-	  <%end%>
-	  <%=check_box_tag 'add new'%>
-	  <%="add new" -%><br>
-		<%=text_field_tag :new_cat, nil,:placeholder=>"test" %><br>
-	  <!-- End of Categories -->
+			<!-- Categories that were created by the user -->
+			<div class="select-categories">
+			  <h3>Select Categories</h3>
+			  <%arr=[]%>
+			  <%@chronicles.each do |c|%>
+			  	<%c.chronicle_categories.each do |cat| -%>
+				  	<%arr.push(cat.category_id)%>
+			  	<%end%>
+			  <%end%>
+			  <!-- checkboxes -->
+			  <%new_arr=arr.uniq%>
+			  <div class="choices">
+				  <%new_arr.each do |new_cat|%>
+					  <%=check_box_tag 'categories[]', new_cat -%>
+				  	<%=Category.find(new_cat).category_name%> <br>
+				  <%end%>
+				  <%=check_box_tag 'add new'%>
+				  <%="add new" -%><br>
+			  </div>
+				<%=text_field_tag :new_cat, nil,:placeholder=>"New Category" %><br>
+			</div>
+		  <!-- End of Categories -->
 
-		<%=f.hidden_field :user_id, value:current_user.id%>
-		<%=f.hidden_field :manual, value:"true"%>
-		<%=f.submit %>
-	<% end %>
+
+		  <!-- Add to stack -->
+		  <div class="select-stacks">
+			  <h3>Select Stacks:</h3>
+			  <div class="choices">
+				  <%@stacks.each do |stack|%>
+				  	<%=check_box_tag 'stacks[]', stack.id -%> 
+				  	<%=stack.stack_name%> <br>
+				  <%end%>
+			  </div>
+		  </div>
+		  <!-- End add to stack -->
+
+			<%=f.hidden_field :user_id, value:current_user.id%>
+			<%=f.hidden_field :manual, value:"true"%>
+			<div class="create-chronicle-btn">
+				<%=f.submit%>
+			</div>
+		<% end %>
+	</div>
 
 </div>
 
 <!-- URL INFO -->
-<h1>OR ENTER URL</h1>
-<%= form_for(@chronicle, remote:true) do |f| %>
-	<%=f.text_field :reference_url, placeholder: "url"%><br>
-	<%=f.hidden_field :user_id, value:current_user.id%>
-	<%=f.hidden_field :manual, value:"false"%>
-	<%=f.submit %>
-<% end %>
+<div id="url-chronicle">
+	<div class="url-box">
+		<%= form_for(@chronicle, remote:true) do |f| %>
+			<%=f.text_field :reference_url, placeholder: "Paste URL", class: "url-link"%><br>
+			<%=f.hidden_field :user_id, value:current_user.id%>
+			<%=f.hidden_field :manual, value:"false"%>
+			<div class="create-chronicle-btn">
+				<%=f.submit %>
+			</div>
+		<% end %>
+	</div>
+</div>
 
-<div id="scrape"></div>
+<!-- <div id="scrape"></div> -->

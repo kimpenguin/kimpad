@@ -1,38 +1,57 @@
-edit.html.erb
-<%= form_for @stack do |f| %>
-	<%=f.text_field :stack_name, placeholder: "Stack Name"%><br>
-	<%=f.hidden_field :user_id, value:current_user.id%>
-	<!-- Contributors checkbox -->
-	Select Contributors<br>
-  <%contributors=@stack_contributors.pluck(:user_id)%>
-  <%@users.each do |u|%>
-	  <%if contributors.include?u.id%>
-	  	<%=check_box_tag 'users[]',u.id, u.username -%>
-			<%=u.username -%><br>
-	  <%else%>
-	  	<%=check_box_tag 'users[]', u.id -%>
-			<%=u.username -%><br>
-	  <%end%>
-  <%end%>
-  <!-- end checkboxes -->
+<div id="stack-main-bg"></div>
 
-  <!-- Categories -->
-	Select Category <br>
-	<%cats=@stack_categories.pluck(:category_id)%>
-  <%@categories.each do |c|%>
-  	<%if cats.include?c.id%>
-	  	<%=check_box_tag 'categories[]', c.id, c.id -%>
-			<%=c.category_name -%><br>
-		<%else%>
-	  	<%=check_box_tag 'categories[]', c.id -%>
-			<%=c.category_name -%><br>
-		<%end%>
-  <%end%>
+<div class="new-stack-main">
+	<h1>Edit Stack</h1>
+	<div class="delete-stack-btn">
+		<%=button_to "Delete", stack_path(@stack.id), method: :delete %>
+	</div>
+</div>
+<div id="new-stack-body">
+	<%= form_for @stack do |f| %>
+		<%=f.text_field :stack_name, placeholder: "Stack Name"%><br>
+		<%=f.hidden_field :user_id, value:current_user.id%>
+		<!-- Contributors checkbox -->
+		<div class="select-contributors">
+			<h3>Select Contributors</h3>
+		  <%contributors=@stack_contributors.pluck(:user_id)%>
+		  <%@users.each do |u|%>
+			  <div class="choices">
+				  <%if contributors.include?u.id%>
+				  	<%=check_box_tag 'users[]',u.id, u.username -%>
+						<%=u.username -%><br>
+				  <%else%>
+				  	<%=check_box_tag 'users[]', u.id -%>
+						<%=u.username -%><br>
+				  <%end%>
+				</div>
+	  	<%end%>
+		</div>
+	  <!-- end checkboxes -->
 
-  <%=check_box_tag 'add new'%>
-  <%="add new" -%><br>
-	<%=text_field_tag :new_cat, nil,:placeholder=>"test" %><br>
-  <!-- End Categories -->
-
-	<%=f.submit %>
-<% end %>
+	  <!-- Categories -->
+	  <div class="select-categories-stack">
+			Select Category <br>
+			<%cats=@stack_categories.pluck(:category_id)%>
+			<div class="choices">
+			  <%@categories.each do |c|%>
+			  	<%if cats.include?c.id%>
+				  	<%=check_box_tag 'categories[]', c.id, c.id -%>
+						<%=c.category_name -%><br>
+					<%else%>
+				  	<%=check_box_tag 'categories[]', c.id -%>
+						<%=c.category_name -%><br>
+					<%end%>
+			  <%end%>
+			  <%=check_box_tag 'add new'%>
+			  <%="add new" -%><br>
+			  <div class="new-category-name">
+					<%=text_field_tag :new_cat, nil,:placeholder=>"New Category Name" %><br>
+				</div>
+			</div>
+		</div>
+	  <!-- End Categories -->
+	  <div class="create-chronicle-btn">
+			<%=f.submit %>
+		</div>
+	<% end %>
+</div>

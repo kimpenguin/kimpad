@@ -11,7 +11,7 @@
 }
 .stack-main{
 	width: 100%;
-	background: darkgray;
+	background: rgba(0, 0, 0, 0.6);
 	margin:0 auto 10px auto;
 	text-align: center;
 	padding: 30px 0px 30px 0px;
@@ -165,4 +165,112 @@
   z-index: 2;
 }
 
-
+.new-stack-main{
+	width: 100%;
+	background: rgba(0, 0, 0, 0.6);
+	margin:0 auto 10px auto;
+	text-align: center;
+	padding: 30px 0px 30px 0px;
+	h1{
+		text-align: center;
+		line-height: 0px;
+		color: white;
+	}
+}
+#new-stack-body{
+	width:70%;
+	/*background: white;*/
+	margin: 0 auto;
+	margin-bottom: 40px;
+}
+input[id=stack_stack_name]{
+	width:100%;
+	box-sizing : border-box;
+	border: solid lightgray;
+	border-radius: 4px;
+	padding-right: 5px;
+	height: 40px;
+	margin-bottom: 10px;
+	padding-left: 10px;
+}
+.select-contributors{
+	width:100%;
+	margin-right: 10px;
+	background: white;
+	/*height:100px;*/
+	box-sizing : border-box;
+	/*overflow: scroll;*/
+	padding: 10px 0;
+	/*float: left;*/
+	display: block;
+	margin-top: 10px;
+	margin-bottom: 10px;
+	border: 2px solid lightgray;
+	border-radius: 4px;
+	h3{
+		margin-left: 10px;
+		line-height: 0;
+	}
+}
+.con{
+	height: 40px;
+	background: orange;
+	margin-bottom: 2px;
+	img{
+		margin:5px auto;
+	}
+	input[type=checkbox]{
+		margin: auto;
+	}
+}
+.select-categories-stack{
+	width:100%;
+	margin-right: 10px;
+	background: white;
+	height:100px;
+	overflow: scroll;
+	box-sizing : border-box;
+	padding: 10px 0;
+	float: left;
+	display: block;
+	margin-top: 10px;
+	margin-bottom: 10px;
+	border: 2px solid lightgray;
+	border-radius: 4px;
+	h3{
+		margin-left: 10px;
+		line-height: 0;
+	}
+	input[name=new_cat]{
+		margin-top: 5px;
+		margin-left: 10px;
+		/*background-color: gray;*/
+		border: solid lightgray;
+		border-radius: 4px;
+		width: 90%;
+		height:30px;
+		padding-left: 5px;
+	}
+}
+.new-category-name{
+	display: none;
+}
+.delete-stack-btn{
+	width: 100%;
+	display: inline-block;
+	/*background: magenta;*/
+	// margin-top: 10px;
+	input[type=submit]{
+		width:5%;
+		background-color: white;
+		border-radius: 4px;
+		border: solid white;
+		height: 30px;
+		margin:auto 40%;
+		&:hover{
+			background:red;
+			border-color:red; 
+			color:white;
+		}
+	}
+}

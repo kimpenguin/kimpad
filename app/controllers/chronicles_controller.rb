@@ -8,15 +8,20 @@ class ChroniclesController < ApplicationController
 		@chronicle=Chronicle.new
 		@stacks=Stack.where(user_id:current_user.id)
 		@stack=Stack.new
-		@categories=Category.all
+
+		# categories
+		@categories=Category.all #all
+		@chronicles=Chronicle.where(user_id:current_user.id) #by user
+
 	end
 
 	def create
 		puts "creating"
-		# puts params.inspect
+		puts params.inspect
 		# add_categories
 		# redirect_to :back
-		# create the new chronicle
+		
+
 		if params[:chronicle][:manual]=="true"
 			@chronicle=Chronicle.new(chronicle_params)
 
@@ -26,6 +31,7 @@ class ChroniclesController < ApplicationController
 			if !(Chronicle.where(reference_url: params[:chronicle][:reference_url]).first && params[:chronicle][:reference_url]=nil)
 					@chronicle.save!
 					add_chronicle_categories #add the categories
+					add_chronicle_stacks #add stackchronicle
 					# puts @chronicle.image.url # => '/url/to/file.png'
 					# puts @chronicle.image.current_path # => 'path/to/file.png'
 					# puts @chronicle.image_identifier # => 'file.png'
@@ -43,6 +49,7 @@ class ChroniclesController < ApplicationController
 			puts @chronicle.image
 			if @chronicle.save
 				add_chronicle_categories #add the categories
+				add_chronicle_stacks #add stackchronicle
 				redirect_to chronicle_path(@chronicle.id)
 			else
 				flash[:alert] = "Sorry! The post exists."
@@ -55,6 +62,8 @@ class ChroniclesController < ApplicationController
 
 			# goto new.js.erb
 			respond_to do |format|
+				@stacks=Stack.where(user_id:current_user.id)
+				@chronicles=Chronicle.where(user_id:current_user.id) #by user
 				@chronicle=Chronicle.new(get_parameters(url))
 				@categories=Category.all
 				puts "WELCOM BACK"
@@ -78,12 +87,18 @@ class ChroniclesController < ApplicationController
 		@chronicle=Chronicle.find(params[:id])
 		@categories=Category.all
 		@chronicle_categories=ChronicleCategory.where(chronicle_id:params[:id])
+		@chronicles=Chronicle.where(user_id:current_user.id) #by user
+		@stacks=Stack.where(user_id:current_user.id)
+		@stack_chronicles=StackChronicle.where(chronicle_id:params[:id])
 	end
 
 	def update
 		@chronicle=Chronicle.find(params[:id])
+
+		# redirect_to :back
 		if @chronicle.update_attributes(chronicle_params)
 			update_chronicle_categories
+			update_chronicle_stacks
 			flash[:notice] = "The post has been updated."
 			redirect_to chronicle_path(@chronicle.id)
 		else

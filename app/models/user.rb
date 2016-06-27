@@ -4,7 +4,7 @@ class User < ActiveRecord::Base
 	has_many :bookmarks
 	has_many :lists
   has_many :stack_contributors
-  has_many :stacks, through: :stack_contributors
+  # has_many :stacks, through: :stack_contributors
   
   # allows users to upload image
   mount_uploader :avatar, PictureUploader

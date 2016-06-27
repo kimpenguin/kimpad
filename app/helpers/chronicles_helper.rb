@@ -140,8 +140,92 @@ module ChroniclesHelper
 		if  cat_arr.count==db_cat.count
 			puts "Yayyyy"
 		end
+	end
+
+	def add_chronicle_stacks
+		puts "in chronicle stacks"
+		stacks=params[:stacks]
+		# puts stacks
+
+		stacks.each do |stack|
+			StackChronicle.create(stack_id:stack, chronicle_id:@chronicle.id)
+		end
+	end
+
+	def update_chronicle_stacks
+		puts "in update chronicle stacks"
+		stacks=params[:stacks]
+
+		# in the database
+		db_stacks=StackChronicle.where(chronicle_id:@chronicle.id)
+		puts "the stack is #{db_stacks}"
 
 
+		# add stacks
+		if stacks.count>db_stacks.count
+			stacks.each do |stack|
+				if StackChronicle.exists?(stack_id:stack, chronicle_id:@chronicle.id)
+					puts "exists"
+				else
+					puts "add"
+					StackChronicle.create(stack_id:stack, chronicle_id:@chronicle.id)
+				end
+			end
+
+		end
+
+		if stacks.count<db_stacks.count
+			puts "REMOVING"
+			arr=db_stacks.pluck(:stack_id)
+			stacks.each do |stack|
+				puts "#{stack}"
+				puts "#{arr}"
+				if arr.include?stack.to_i
+					arr.delete(stack.to_i)
+				end
+			end
+			puts "new arr is #{arr}"
+			arr.each do |rm_arr|
+				to_remove=StackChronicle.where(stack_id:rm_arr, chronicle_id:@chronicle.id).first
+				to_remove.destroy
+			end
+		end
+		# user removes all stacks
+		if stacks.nil? && db_stacks.count>0
+			db_stacks.each do |rm|
+				StackChronicle.find(rm.id).destroy
+			end
+		end
+
+		# check that the stacks match
+		if stacks.count==db_stacks.count
+			db_ids=db_stacks.pluck(:stack_id)
+			puts "the val is #{stacks.map(&:to_i)} #{db_ids}"
+			if (stacks.map(&:to_i)-db_ids).count==0
+				puts "no change"
+			end
+			if (stacks.map(&:to_i)-db_ids).count>0
+				puts "theres a change"
+
+				# add
+				to_add=stacks.map(&:to_i)-db_ids
+				puts "to add #{to_add}"
+				to_add.each do |ta|
+					StackChronicle.create(stack_id:ta, chronicle_id:@chronicle.id)
+				end
+				
+				# remove
+				to_remove=db_ids-stacks.map(&:to_i)
+				puts "to remove #{to_remove}"
+				to_remove.each do |rm|
+					to_rm=StackChronicle.where(stack_id:rm, chronicle_id:@chronicle.id).first.id
+					puts "to add #{to_rm}"
+					StackChronicle.find(to_rm).destroy
+				end
+
+
+			end
+		end
 
 	end
 end

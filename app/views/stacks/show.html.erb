@@ -1,8 +1,10 @@
 <div id="stack-main-bg"></div>
 <div class="stack-main">
 	<h1><%=@stack.stack_name%>
-	<%=link_to edit_stack_path(@stack.id), class: "edit-stack" do%>	
-		<i class="fa fa-pencil" aria-hidden="true"></i>
+	<%if @stack.user==current_user%>
+		<%=link_to edit_stack_path(@stack.id), class: "edit-stack" do%>	
+			<i class="fa fa-pencil" aria-hidden="true"></i>
+		<%end%>
 	<%end%>
 	</h1>
 	<%@contributors.each do |c|%>

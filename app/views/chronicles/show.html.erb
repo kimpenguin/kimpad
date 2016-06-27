@@ -1,16 +1,30 @@
-<h1><%=@chronicle.title%></h1>
-<!-- edit chronicle -->
-<%=button_to "edit", edit_chronicle_path(@chronicle.id), method: :get%>
-<!-- end edit -->
-<img src="<%=@chronicle.image.url%>">
-<%=raw @chronicle.body%>
-<%if @chronicle.reference_url%>
-	<%=link_to @chronicle.reference_url, @chronicle.reference_url, target:"_blank"%><br>
-<%end%>
+<div id="chronicle-show-bg"></div>
+<div id="chronicle-show">
+	<h1><%=@chronicle.title%>
+	<!-- edit chronicle -->
+	<%if @chronicle.user==current_user%>
+		<%=link_to edit_chronicle_path(@chronicle.id), class: "edit-chronicle" do%>	
+			<i class="fa fa-pencil" aria-hidden="true"></i>
+		<%end%>
+	<%end%>
+	</h1>
+	<!-- end edit -->
+	<img src="<%=@chronicle.image.url%>">
+	<div id="chronicle-show-body">
+		<%=raw @chronicle.body%>
+		<%if @chronicle.reference_url%>
+			<h3>Source</h3>
+			<%=link_to @chronicle.reference_url, @chronicle.reference_url, target:"_blank"%><br>
+		<%end%>
 
-<!-- categories -->
-<h3>Categories:</h3>
-<%@chronicle.chronicle_categories.each do |c|%>
-	<%=link_to c.category.category_name, category_path(c.category.id)%> 
-<%end%>
-<!-- end categories -->
+		<!-- categories -->
+		<h3>Categories:</h3>
+		<%@chronicle.chronicle_categories.each do |c|%>
+			<div class="category-bubble">
+				<%=link_to c.category.category_name, category_path(c.category.id)%> 
+			</div>
+		<%end%>
+		<!-- end categories -->
+	</div>
+
+</div>

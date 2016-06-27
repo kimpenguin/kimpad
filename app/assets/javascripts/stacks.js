@@ -21,4 +21,9 @@ $(document).ready(function(){
 	// 	$(".main-text-"+i).css({"overflow": "hidden"});
 	// 	$(val).css({"height": "200px"});
 	// });
+
+	$("#add_new").on('click',function(){
+		// console.log('hey')
+		$(".new-category-name").show();
+	})
 })
