@@ -31,7 +31,7 @@
 		<div id="district-bg"></div>
 		<div id="district-header">
 		<h1 id="center-text">Explore</h1>
-			<button class="district-featured">Bookmarks</button>
+			<button class="district-featured">Featured</button>
 			<button class="district-stacks">Stacks</button>
 			<button class="district-chronicles">Chronicles</button>
 		</div>
@@ -92,17 +92,12 @@
 		<div id="ds">
 			<div id="user-stacks">
 				<div id="user-box">
-					<h1>Stacks</h1>
-					<%@stack_all.each do |stack|%>
+					<h1 id="center-text">Stacks</h1>
+					<%@stacks_all.each do |stack|%>
 						<div class="stack-single">
 							<div class="stack-single-left">
 								<p><%=link_to stack.stack_name, stack_path(stack.id)%></p>
 								</div>
-								<div class="stack-single-right">
-									<%=link_to edit_stack_path(stack.id), class: "edit-stack" do%>
-										<i class="fa fa-pencil fa-lg" aria-hidden="true"></i>
-									<%end%>
-							</div>
 							<%arr=stack.stack_chronicles.pluck(:chronicle_id)%>
 							<!-- if there are stackchronicles, get a random image -->
 							<%if stack.stack_chronicles.any?%>
@@ -133,6 +128,29 @@
 				</div>
 			</div>
 		</div>
+		<!-- end stacks -->
+
+		<!-- chronicles -->
+		<div id="dc">
+			<div id="user-chronicles">
+				<div id="user-box">
+					<!-- chronicles -->
+					<h1 id="center-text">Chronicles</h1>
+					<%@chronicles_all.each do |chronicle|%>
+						<div class="chronicle2">
+							<div class="chronicle-inner1">
+								<img src="<%=chronicle.image.url%>">
+							</div>
+							<div class="chronicle-name">
+								<%=link_to chronicle.title, chronicle_path(chronicle.id)%><br>
+							</div>
+						</div>
+					<%end%>
+				</div>
+			</div>
+		</div>
+
+		<!-- end chronicles -->
 	</div>
 <%else%>
 <!-- ####################################################################### -->
