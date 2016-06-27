@@ -57,7 +57,7 @@
 	}
 }
 %button-styles{
-	width: 30%;
+	min-width: 30%;
 	height: 30px;
 	margin: auto 35%;
 	/*border-radius:10px;*/
@@ -85,6 +85,18 @@
 		@extend %button-styles;
 		margin-top: 0.5%;
 	}
+}
+.sign-me-up {
+	margin-top:5px;
+	input[type=submit]{
+		@extend %button-styles;
+		margin-top: 0.5%;
+		// color:red;
+		&:hover{
+			@extend %button-hover;
+		}
+	}
+	
 }
 .landing-form{
 	width: 100%;
