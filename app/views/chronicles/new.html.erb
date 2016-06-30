@@ -73,7 +73,9 @@
 			<%=f.hidden_field :user_id, value:current_user.id%>
 			<%=f.hidden_field :manual, value:"false"%>
 			<div class="create-chronicle-btn">
-				<%=f.submit %>
+				<div class="btn-render">
+					<%=f.submit %>
+				</div>
 			</div>
 		<% end %>
 	</div>

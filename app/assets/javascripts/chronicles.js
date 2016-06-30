@@ -11,4 +11,8 @@ $(document).ready(function(){
 		$(".url-rendered").show();
 		$("#manual-chronicle").hide();
 	});
+	$(".btn-render").on('click', function(){
+		$(this).prop("disabled",true);
+		$(".btn-render").fadeOut();
+	});
 })

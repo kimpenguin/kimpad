@@ -8,6 +8,7 @@
 	<%end%>
 	</h1>
 	<%@contributors.each do |c|%>
+
 		<%=link_to image_tag(c.user.avatar.mini.url), user_path(c.user.id)%>
 	<%end%>
 	<div class="stack-main-categories">
