@@ -198,24 +198,27 @@
 
 							<!-- end of Bookmarks -->
 
-							<%arr=stack.stack_chronicles.pluck(:chronicle_id)%>
-							<!-- if there are stackchronicles, get a random image -->
-							<%if stack.stack_chronicles.any?%>
-								<!-- <div class="stack-inner1"> -->
-									<%if Chronicle.exists?(arr[0])%>
-										<div class="stack-inner2"><img src="<%=Chronicle.find(arr[0]).image.url%>"></div>
-									<%end%>
-									<%if Chronicle.exists?(arr[1])%>
-										<div class="stack-inner3"><img src="<%=Chronicle.find(arr[1]).image.url%>"></div>
-									<%end%>
-									<%if Chronicle.exists?(arr[2])%>
-										<div class="stack-inner3"><img src="<%=Chronicle.find(arr[2]).image.url%>"></div>
-									<%end%>
-									<%if Chronicle.exists?(arr[3])%>
-										<div class="stack-inner3"><img src="<%=Chronicle.find(arr[3]).image.url%>"></div>
-									<%end%>
-								<!-- </div> -->
-							<%end%>
+							<!-- link to stack -->
+							<a href="<%=stack_path(stack.id)%>">
+								<%arr=stack.stack_chronicles.pluck(:chronicle_id)%>
+								<!-- if there are stackchronicles, get a random image -->
+								<%if stack.stack_chronicles.any?%>
+									<!-- <div class="stack-inner1"> -->
+										<%if Chronicle.exists?(arr[0])%>
+											<div class="stack-inner2"><img src="<%=Chronicle.find(arr[0]).image.url%>"></div>
+										<%end%>
+										<%if Chronicle.exists?(arr[1])%>
+											<div class="stack-inner3"><img src="<%=Chronicle.find(arr[1]).image.url%>"></div>
+										<%end%>
+										<%if Chronicle.exists?(arr[2])%>
+											<div class="stack-inner3"><img src="<%=Chronicle.find(arr[2]).image.url%>"></div>
+										<%end%>
+										<%if Chronicle.exists?(arr[3])%>
+											<div class="stack-inner3"><img src="<%=Chronicle.find(arr[3]).image.url%>"></div>
+										<%end%>
+									<!-- </div> -->
+								<%end%>
+							</a>
 						</div>
 					<%end%>
 				</div>
