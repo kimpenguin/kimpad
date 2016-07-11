@@ -151,7 +151,7 @@ module ChroniclesHelper
 
 
 		# add stacks
-		if stacks.count>db_stacks.count
+		if !stacks.nil? && stacks.count>db_stacks.count
 			stacks.each do |stack|
 				if StackChronicle.exists?(stack_id:stack, chronicle_id:@chronicle.id)
 					puts "exists"
@@ -163,7 +163,7 @@ module ChroniclesHelper
 
 		end
 
-		if stacks.count<db_stacks.count
+		if !stacks.nil? && stacks.count<db_stacks.count
 			puts "REMOVING"
 			arr=db_stacks.pluck(:stack_id)
 			stacks.each do |stack|
@@ -187,7 +187,7 @@ module ChroniclesHelper
 		end
 
 		# check that the stacks match
-		if stacks.count==db_stacks.count
+		if !stacks.nil? && stacks.count==db_stacks.count
 			db_ids=db_stacks.pluck(:stack_id)
 			puts "the val is #{stacks.map(&:to_i)} #{db_ids}"
 			if (stacks.map(&:to_i)-db_ids).count==0
