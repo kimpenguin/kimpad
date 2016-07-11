@@ -88,7 +88,7 @@ module ChroniclesHelper
 		end
 
 		# if the number of contributors is greater than the ones in the database, add the new ones
-		if cat_arr.count>db_cat.count
+		if !cat_arr.nil? && cat_arr.count>db_cat.count
 			# add new contributors
 			cat_arr.each do |cc|
 				if ChronicleCategory.exists?(chronicle_id: @chronicle.id, category_id: cc)
@@ -124,7 +124,7 @@ module ChroniclesHelper
 			# end
 		end
 
-		if  cat_arr.count==db_cat.count
+		if  !cat_arr.nil? && cat_arr.count==db_cat.count
 			puts "Yayyyy"
 		end
 	end
