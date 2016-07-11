@@ -49,10 +49,6 @@ GEM
       json (>= 1.7)
       mime-types (>= 1.16)
       mimemagic (>= 0.3.0)
-    carrierwave_direct (0.0.15)
-      carrierwave
-      fog
-      uuidtools
     ckeditor (4.1.6)
       cocaine
       orm_adapter (~> 0.5.0)
@@ -311,7 +307,6 @@ GEM
       thread_safe (~> 0.1)
     uglifier (3.0.0)
       execjs (>= 0.3.0, < 3)
-    uuidtools (2.1.5)
     web-console (2.3.0)
       activemodel (>= 4.0)
       binding_of_caller (>= 0.7.2)
@@ -326,10 +321,9 @@ DEPENDENCIES
   bcrypt (~> 3.1.7)
   byebug
   carrierwave
-  carrierwave_direct
   ckeditor
   coffee-rails (~> 4.1.0)
-  fog-aws
+  fog
   jbuilder (~> 2.0)
   jquery-rails
   jquery-turbolinks
