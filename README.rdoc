@@ -1,28 +1,23 @@
-== README
+= OrMe: Organize-Me
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+This is a Ruby on Rails application that allows users to easily create collections of their favorite recipes from various websites (Food Network, Kithcn, Real Simple, SeriousEats) with one copy and paste - the recipe's URL.
 
-Things you may want to cover:
+== Demo
+Go to https://orme.herokuapp.com/
 
-* Ruby version
+You can create an account or use a test user. Log in with the following credentials:
 
-* System dependencies
+*username:* johndoe
 
-* Configuration
+*password:* 123456
 
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
-
-
-Please feel free to use a different markup language if you do not plan to run
-<tt>rake doc:app</tt>.
+== Technologies
+1. Ruby on Rails
+2. Javascript
+3. jQuery
+4. HTML
+5. CSS
+6. Sass
+7. Nokogiri
+8. CarrierWave
+9. AWS E3
